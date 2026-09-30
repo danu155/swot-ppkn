@@ -2,11 +2,13 @@ import { lazy, Suspense } from 'react'
 
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
 
+import HeroOrbitLabels from '@/components/HeroOrbitLabels'
 import Logomark from '@/components/Logomark'
 import Reveal from '@/components/Reveal'
 import { Button } from '@/components/ui/button'
 import { useWebGLSupport } from '@/lib/use-canvas'
-import { meta } from '@/data'
+import { gayaAspek } from '@/lib/swot-style'
+import { meta, swot } from '@/data'
 import { cn } from '@/lib/utils'
 
 // three.js hanya diunduh saat Hero benar-benar dirender (bukan di bundel awal).
@@ -14,6 +16,16 @@ const HeroScene = lazy(() => import('@/components/three/HeroScene'))
 
 // Sumber angka kunci tetap dari data.js (tidak ada fakta yang di-hardcode).
 const sorotan = meta.section.latarBelakang.stats
+
+/**
+ * Label yang mengorbit di sekeliling orb 3D. Diturunkan dari data.js: empat
+ * aspek SWOT (label + warna aspek). Ditaruh di empat sudut diagonal agar teks
+ * punya ruang dan tidak menutupi orb.
+ */
+const LABEL_ORBIT = swot.map((s) => ({
+  label: s.label,
+  warna: gayaAspek[s.warna]?.hex ?? 'var(--accent-ikn)',
+}))
 
 /**
  * Fallback statis untuk Hero saat WebGL tidak tersedia atau scene masih dimuat:
@@ -154,17 +166,14 @@ export default function Hero() {
               {/* Cahaya lembut di belakang orb */}
               <div
                 aria-hidden="true"
-                className="bg-accent-ikn/10 absolute inset-0 -z-10 rounded-full blur-3xl"
+                className="bg-accent-ikn/10 absolute inset-[14%] -z-10 rounded-full blur-3xl"
               />
+              {/* Orb 3D mengisi container; ukurannya diatur lewat jarak kamera
+                  di HeroScene agar anotasi orbit tetap punya ruang di luar. */}
               <Scene className="absolute inset-0" />
 
-              {/* Anotasi mengambang bergaya diagram teknis */}
-              <div className="pointer-events-none absolute right-0 bottom-6 hidden max-w-[11rem] border-l-2 border-accent-ikn/60 pl-3 text-left sm:block">
-                <p className="label-mono text-accent-ikn">Inti / Core</p>
-                <p className="text-muted-foreground mt-1 text-xs text-pretty">
-                  Pemerintahan terencana, hijau, dan terhubung.
-                </p>
-              </div>
+              {/* Label yang berputar mengelilingi orb */}
+              <HeroOrbitLabels items={LABEL_ORBIT} className="hidden sm:block" />
             </div>
           </div>
         </div>

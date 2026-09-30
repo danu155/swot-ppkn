@@ -89,7 +89,7 @@ export default function HeroScene({ className }) {
           premultipliedAlpha: false,
           powerPreference: 'high-performance',
         }}
-        camera={{ position: [0, 0, 6], fov: 42 }}
+        camera={{ position: [0, 0, 6.5], fov: 40 }}
         frameloop={reduced ? 'demand' : 'always'}
         onCreated={({ gl }) => {
           gl.toneMappingExposure = 1.05

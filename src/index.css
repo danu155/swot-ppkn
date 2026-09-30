@@ -147,6 +147,7 @@
   --animate-marquee: marquee 38s linear infinite;
   --animate-shimmer: shimmer 6s ease-in-out infinite;
   --animate-float: float 18s ease-in-out infinite;
+  --animate-bubble-in: bubble-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 
   @keyframes marquee {
     from {
@@ -178,6 +179,19 @@
     50% {
       transform: translateY(20px) scale(1.05);
       opacity: 1;
+    }
+  }
+
+  /* Bubble chat muncul dengan sedikit pantulan (transform-origin di kaki
+     ekor agar terasa tumbuh dari titik percakapan). */
+  @keyframes bubble-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
   }
 }
@@ -221,7 +235,8 @@
 
     .animate-marquee,
     .animate-shimmer,
-    .animate-float {
+    .animate-float,
+    .animate-bubble-in {
       animation: none !important;
     }
   }
