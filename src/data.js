@@ -37,7 +37,7 @@ export const meta = {
     swot: {
       judul: 'Analisis SWOT',
       deskripsi:
-        'Klik tiap kartu untuk melihat definisi teori dan tiga poin konkretnya.',
+        'Buka tiap kartu untuk melihat definisi teori dan tiga poin konkretnya.',
     },
     timeline: {
       judul: 'Timeline Pembangunan',
