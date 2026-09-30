@@ -132,3 +132,4 @@ Lalu di **Settings → Pages**, pilih branch `gh-pages` sebagai sumber.
   (`aria-expanded`, `aria-controls`).
 - Tema awal dipasang sebelum paint untuk menghindari kedipan (anti-flash).
 # swot-ppkn
+# swot-ppkn
