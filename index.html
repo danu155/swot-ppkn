@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analisis SWOT Ibu Kota Nusantara (IKN)</title>
+    <meta
+      name="description"
+      content="Analisis SWOT (kekuatan, kelemahan, peluang, ancaman) pembangunan Ibu Kota Nusantara beserta latar belakang dan timeline pembangunannya."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:title" content="Analisis SWOT Ibu Kota Nusantara (IKN)" />
+    <meta
+      property="og:description"
+      content="Ringkasan kekuatan, kelemahan, peluang, dan ancaman pembangunan Ibu Kota Nusantara."
+    />
+    <meta name="twitter:card" content="summary" />
+    <script>
+      // Anti-flash: pasang tema sebelum paint agar tidak berkedip.
+      // Urutan: pilihan tersimpan -> preferensi sistem -> terang.
+      ;(function () {
+        try {
+          var stored = localStorage.getItem('ikn-swot-theme')
+          var system = window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light'
+          var theme = stored === 'light' || stored === 'dark' ? stored : system
+          var root = document.documentElement
+          root.classList.toggle('dark', theme === 'dark')
+          root.style.colorScheme = theme
+        } catch (e) {
+          /* noop */
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

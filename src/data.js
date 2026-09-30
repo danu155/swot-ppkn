@@ -1,0 +1,117 @@
+/**
+ * src/data.js
+ * ---------------------------------------------------------------------------
+ * SATU-SATUNYA SUMBER KONTEN untuk halaman "Analisis SWOT Ibu Kota Nusantara".
+ * Semua komponen HANYA membaca dari file ini. Untuk mengganti materi, cukup
+ * ubah nilai di sini tanpa menyentuh kode komponen.
+ *
+ * CATATAN: array `latarBelakang`, `swot`, dan `timeline` berisi data sesuai
+ * brief dan TIDAK diubah. Blok `meta` hanya berisi teks antarmuka (judul
+ * halaman, label bagian, placeholder footer) yang tidak memuat fakta/angka baru.
+ * ---------------------------------------------------------------------------
+ */
+
+/* ------------------------------- Teks UI --------------------------------- */
+
+export const meta = {
+  judul: 'Analisis SWOT Ibu Kota Nusantara (IKN)',
+  subjudul:
+    'Ringkasan kekuatan, kelemahan, peluang, dan ancaman pembangunan Ibu Kota Nusantara.',
+  tombolMulai: 'Mulai Jelajahi',
+  labelJelajahi: 'Jelajahi analisis',
+  // Label untuk indikator progres baca di header.
+  progresBaca: 'Progres baca halaman',
+  section: {
+    latarBelakang: {
+      judul: 'Latar Belakang',
+      deskripsi:
+        'Alasan di balik pemindahan ibu kota negara dari Jakarta ke Kalimantan Timur.',
+      // Angka sorotan — SEMUA nilainya diambil dari deskripsi latarBelakang di
+      // bawah (bukan fakta/angka baru), hanya disajikan ulang sebagai chip.
+      stats: [
+        { nilai: '> 57%', label: 'PDB nasional terpusat di Pulau Jawa' },
+        { nilai: '75%', label: 'Wilayah dialokasikan sebagai kawasan hijau' },
+        { nilai: '2045', label: 'Target emisi net-zero (Smart Forest City)' },
+      ],
+    },
+    swot: {
+      judul: 'Analisis SWOT',
+      deskripsi:
+        'Klik tiap kartu untuk melihat definisi teori dan tiga poin konkretnya.',
+    },
+    timeline: {
+      judul: 'Timeline Pembangunan',
+      deskripsi: 'Empat tahap besar pembangunan Ibu Kota Nusantara hingga 2045.',
+    },
+  },
+  footer: {
+    judulSumber: 'Sumber & Referensi',
+    catatanSumber:
+      'Placeholder — daftar referensi resmi akan ditambahkan di sini.',
+    // Placeholder; ganti dengan tajuk/tautan referensi yang sebenarnya.
+    sumber: [
+      { label: 'Referensi 1 (placeholder)', href: '#' },
+      { label: 'Referensi 2 (placeholder)', href: '#' },
+      { label: 'Referensi 3 (placeholder)', href: '#' },
+    ],
+    kredit: 'Dibuat sebagai media pembelajaran. Konten disusun dari data yang tersedia.',
+  },
+}
+
+/* ----------------------------- Latar Belakang ---------------------------- */
+
+export const latarBelakang = [
+  { judul: "Daya Dukung Lingkungan dan Kepadatan Jakarta", deskripsi: "Jakarta menghadapi penurunan muka tanah (land subsidence), potensi banjir rob, polusi udara, dan kemacetan kronis. Pemisahan fungsi tata kelola negara dari pusat bisnis bertujuan menurunkan beban ekologis kota metropolitan lama." },
+  { judul: "Pemerataan Perekonomian (Indonesia-sentris)", deskripsi: "Aktivitas ekonomi terkonsentrasi di Pulau Jawa yang menyumbang lebih dari 57% PDB nasional. Pemindahan ke Kalimantan Timur diarahkan memicu titik pertumbuhan ekonomi baru di Indonesia tengah dan timur." },
+  { judul: "Visi Smart Forest City", deskripsi: "Dibangun dari nol dengan penataan ruang terencana. 75% wilayah dialokasikan sebagai kawasan hijau, memanfaatkan energi baru terbarukan, dan menargetkan emisi net-zero pada 2045." }
+];
+
+/* -------------------------------- Analisis ------------------------------- */
+
+export const swot = [
+  {
+    kategori: "Strengths", label: "Kekuatan", warna: "green",
+    teori: "Keunggulan atau sumber daya internal yang sudah dimiliki secara sah dan menjadi modal dasar keberhasilan proyek.",
+    poin: [
+      { judul: "Penguasaan Lahan Negara", deskripsi: "Mayoritas lahan inti pemerintahan memakai area eks Hutan Tanaman Industri (HTI) milik negara, sehingga biaya pengadaan lahan dan konflik pembebasan tanah lebih kecil dibanding kota padat." },
+      { judul: "Kekuatan Payung Hukum", deskripsi: "Kewenangan IKN berdasar UU No. 3 Tahun 2022 (jo. UU No. 21 Tahun 2023) yang memberi otonomi khusus kepada Otorita IKN." },
+      { judul: "Lokasi Geografis yang Terhubung", deskripsi: "Berada di tengah kepulauan nusantara, dekat jalur pelayaran ALKI II, dan diapit dua kota penyangga mapan: Balikpapan dan Samarinda." }
+    ]
+  },
+  {
+    kategori: "Weaknesses", label: "Kelemahan", warna: "red",
+    teori: "Keterbatasan kapasitas internal, defisit sarana, atau beban biaya awal yang harus ditanggung organisasi.",
+    poin: [
+      { judul: "Ketergantungan Anggaran Awal pada Kas Negara", deskripsi: "Pada fase awal, infrastruktur dasar (bendungan, sanitasi air minum, jalan tol KIPP) masih sangat bergantung pada APBN sebelum investasi swasta masuk penuh." },
+      { judul: "Ekosistem Penunjang Hidup Masih Terbatas", deskripsi: "Fasilitas komunitas seperti sekolah bertaraf internasional, rumah sakit spesialis, pusat perbelanjaan, dan hiburan belum sepenuhnya lengkap bagi ASN tahap pertama." },
+      { judul: "Kendala Rekayasa Tanah", deskripsi: "Tanah lempung serpih (clay shale) di beberapa zona konstruksi butuh teknik stabilisasi dan fondasi khusus yang menambah biaya dan waktu pengerjaan." }
+    ]
+  },
+  {
+    kategori: "Opportunities", label: "Peluang", warna: "blue",
+    teori: "Faktor positif dari lingkungan eksternal dan tren makro yang bisa dimanfaatkan untuk akselerasi pertumbuhan.",
+    poin: [
+      { judul: "Arus Pembiayaan Hijau Global (ESG)", deskripsi: "Konsep kota netral karbon membuka peluang pendanaan berkelanjutan (green bonds) dari lembaga keuangan multilateral dunia." },
+      { judul: "Kutub Baru Industri Kawasan Timur", deskripsi: "Mendorong ekspansi logistik kelautan, teknologi bersih, dan rantai pasok hilirisasi di Kalimantan dan Sulawesi." },
+      { judul: "Pemberdayaan Birokrasi Digital Sepenuhnya", deskripsi: "Peluang menerapkan smart governance dan sistem paperless tanpa hambatan infrastruktur lama." }
+    ]
+  },
+  {
+    kategori: "Threats", label: "Ancaman", warna: "orange",
+    teori: "Risiko dan ketidakpastian eksternal di luar kendali langsung perencana yang berpotensi menghambat tujuan.",
+    poin: [
+      { judul: "Ketidakpastian Minat Investor Swasta Global", deskripsi: "Suku bunga acuan global yang tinggi dan gejolak geopolitik dapat membuat investor luar negeri bersikap wait and see." },
+      { judul: "Dampak Fragmentasi Ekologis", deskripsi: "Risiko terganggunya koridor pergerakan satwa endemik (orangutan, bekantan) jika pengawasan zonasi hijau di luar wilayah inti tidak konsisten." },
+      { judul: "Dinamika Sosial dan Batas Wilayah Adat", deskripsi: "Potensi sengketa tanah adat/ulayat di wilayah penyangga jika mitigasi sosial dan afirmasi masyarakat lokal kurang transparan." }
+    ]
+  }
+];
+
+/* -------------------------------- Timeline ------------------------------- */
+
+export const timeline = [
+  { periode: "2022–2024", judul: "Fondasi Utama KIPP", deskripsi: "Pembangunan Kawasan Inti Pusat Pemerintahan: Istana Kepresidenan, kantor menteri koordinator, hunian ASN, serta suplai air dan listrik dasar." },
+  { periode: "2025–2029", judul: "Pemindahan Bertahap", deskripsi: "Pemindahan bertahap pegawai kementerian/lembaga serta ekspansi fasilitas komersial, pendidikan, dan kesehatan swasta." },
+  { periode: "2030–2039", judul: "Pengembangan Klaster", deskripsi: "Klaster industri ramah lingkungan, inovasi digital, dan perluasan sistem transportasi terpadu." },
+  { periode: "2040–2045", judul: "Kota Mandiri Net-Zero", deskripsi: "IKN beroperasi penuh sebagai kota mandiri bertaraf internasional yang inklusif dan beremisi net-zero." }
+];

@@ -1,0 +1,195 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------------------
+   Design tokens (shadcn/ui, baseColor: neutral) + warna aspek SWOT
+   --------------------------------------------------------------------------- */
+
+:root {
+  --radius: 0.75rem;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+
+  /* Warna aspek SWOT */
+  --swot-strengths: oklch(0.627 0.17 149.2);
+  --swot-weaknesses: oklch(0.577 0.245 27.3);
+  --swot-opportunities: oklch(0.546 0.215 262.9);
+  --swot-threats: oklch(0.705 0.185 48.3);
+
+  /* Warna berkas cahaya (BeamsBackground), dipakai via hsl(var(--beam-hue) ...) */
+  --beam-hue: 0;
+  --beam-saturation: 74%;
+  --beam-lightness: 49%;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+
+  --swot-strengths: oklch(0.723 0.16 150.5);
+  --swot-weaknesses: oklch(0.704 0.17 25.5);
+  --swot-opportunities: oklch(0.673 0.16 259.5);
+  --swot-threats: oklch(0.79 0.15 62.5);
+
+  /* Berkas cahaya: lebih terang saat mode gelap */
+  --beam-hue: 2;
+  --beam-saturation: 80%;
+  --beam-lightness: 62%;
+}
+
+@theme inline {
+  --color-beam: hsl(
+    var(--beam-hue) var(--beam-saturation) var(--beam-lightness)
+  );
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-swot-strengths: var(--swot-strengths);
+  --color-swot-weaknesses: var(--swot-weaknesses);
+  --color-swot-opportunities: var(--swot-opportunities);
+  --color-swot-threats: var(--swot-threats);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, 'Noto Sans', sans-serif;
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-shimmer: shimmer 4s ease-in-out infinite;
+  --animate-diagonal: diagonal 26s linear infinite;
+  --animate-float: float 16s ease-in-out infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Kilau pada gradasi judul Hero */
+  @keyframes shimmer {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Garis diagonal pinstripe yang bergerak pelan */
+  @keyframes diagonal {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 128px 128px;
+    }
+  }
+
+  /* Bola cahaya melayang pelan (aurora).
+     CATATAN: keyframe ini TIDAK boleh memakai translateX, karena pemusatan
+     horizontal ditangani oleh wrapper (-translate-x-1/2). Bila keduanya
+     memakai translate, elemen bergeser dua kali (bug). */
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0) scale(1);
+      opacity: 0.85;
+    }
+    50% {
+      transform: translateY(24px) scale(1.06);
+      opacity: 1;
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Hormati preferensi pengguna: hentikan semua animasi dekoratif. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    .animate-marquee,
+    .animate-shimmer,
+    .animate-diagonal,
+    .animate-float {
+      animation: none !important;
+    }
+  }
+}
