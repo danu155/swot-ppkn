@@ -34,11 +34,11 @@ function CoverAspek({ item, gaya }) {
         className="absolute inset-0 opacity-40 [background-image:linear-gradient(var(--paper-line)_1px,transparent_1px),linear-gradient(90deg,var(--paper-line)_1px,transparent_1px)] [background-size:22px_22px] [mask-image:radial-gradient(circle_at_50%_45%,black,transparent_82%)]"
       />
 
-      {/* Huruf raksasa samar sebagai latar */}
+      {/* Huruf raksasa samar sebagai latar (di kiri-bawah) */}
       <span
         aria-hidden="true"
         className={cn(
-          'pointer-events-none absolute right-0 -bottom-12 font-display text-[8rem] leading-none font-semibold opacity-[0.12] select-none',
+          'pointer-events-none absolute -bottom-12 left-0 font-display text-[8rem] leading-none font-semibold opacity-[0.12] select-none',
           teks,
         )}
       >
@@ -81,7 +81,7 @@ export default function AnalisisSwot() {
 
   return (
     <Section id="swot">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+      <div className="mx-auto max-w-[90rem] px-6 lg:px-10">
         <SectionHeading
           bab="02"
           eyebrow="Empat Aspek"
@@ -91,7 +91,7 @@ export default function AnalisisSwot() {
           className="mx-auto"
         />
 
-        <div className="mt-10 grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
           {swot.map((item, i) => {
             const gaya = gayaUntuk(item.warna)
             return (
@@ -141,11 +141,11 @@ function AspectDetail({ item }) {
             gaya.latarIkon,
           )}
         >
-          {/* Watermark huruf raksasa */}
+          {/* Watermark huruf raksasa (di kiri-bawah) */}
           <span
             aria-hidden="true"
             className={cn(
-              'pointer-events-none absolute -right-3 -bottom-14 font-display text-[11rem] leading-none font-semibold opacity-[0.12] select-none',
+              'pointer-events-none absolute -bottom-14 -left-3 font-display text-[11rem] leading-none font-semibold opacity-[0.12] select-none',
               teks,
             )}
           >
