@@ -1,70 +1,78 @@
-import { Factory, Hammer, Landmark, Trophy } from 'lucide-react'
-
 import Reveal from '@/components/Reveal'
 import { Section, SectionHeading } from '@/components/Section'
 import { meta, timeline } from '@/data'
 
-// Ikon presentasional per tahap (indeks mengikuti urutan timeline di data.js).
-const ikon = [Hammer, Landmark, Factory, Trophy]
-
+/**
+ * Timeline editorial: rel horizontal di desktop, daftar bertumpuk di mobile.
+ * Tiap tahap digambar sebagai entri berkas — periode mono, tahun besar, dan
+ * garis waktu yang menghubungkan penanda.
+ */
 export default function Timeline() {
   const { judul, deskripsi } = meta.section.timeline
   const jumlah = timeline.length
 
   return (
-    <Section id="timeline" className="bg-muted/40 border-y">
-      <div className="mx-auto max-w-6xl px-4">
-        <SectionHeading eyebrow="Peta Jalan" judul={judul} deskripsi={deskripsi} />
+    <Section id="timeline" className="bg-muted/30 border-y">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <SectionHeading
+          bab="03"
+          eyebrow="Peta Jalan"
+          judul={judul}
+          deskripsi={deskripsi}
+        />
 
-        <ol className="relative mt-14 space-y-8 lg:grid lg:grid-cols-4 lg:gap-6 lg:space-y-0">
-          {/* Garis penghubung: vertikal di HP, horizontal di desktop */}
+        <ol className="relative mt-16 grid grid-cols-1 gap-y-10 sm:gap-y-12 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-0">
+          {/* Rel: vertikal di HP, horizontal di desktop */}
           <div
             aria-hidden="true"
-            className="absolute top-5 bottom-5 left-[19px] w-px bg-gradient-to-b from-primary via-border to-border lg:top-[19px] lg:right-0 lg:bottom-auto lg:left-0 lg:h-px lg:w-auto lg:bg-gradient-to-r"
+            className="bg-border absolute top-2 bottom-2 left-[7px] w-px lg:top-[7px] lg:right-0 lg:bottom-auto lg:left-0 lg:h-px lg:w-auto"
           />
 
           {timeline.map((tahap, i) => {
-            const Icon = ikon[i] ?? Hammer
             const pertama = i === 0
             const terakhir = i === jumlah - 1
 
             return (
-              <li key={tahap.periode} className="relative pl-14 lg:pt-14 lg:pl-0">
-                {/* Penanda node bernomor + ikon */}
+              <li key={tahap.periode} className="relative pl-10 lg:pt-10 lg:pl-0">
+                {/* Penanda node */}
                 <span
                   aria-hidden="true"
-                  className="bg-card text-primary ring-border absolute top-0 left-0 flex size-10 items-center justify-center rounded-full border-2 border-primary/60 shadow-sm ring-4 lg:top-0"
+                  className="bg-background ring-border absolute top-1 left-0 flex size-4 items-center justify-center rounded-full ring-4 lg:top-0"
                 >
-                  <Icon className="size-[18px]" />
+                  <span className="bg-accent-ikn size-1.5 rounded-full" />
                 </span>
 
-                <Reveal delay={i * 90} className="lg:mt-0">
-                  <div className="border-border bg-card group relative rounded-xl border p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
-                    <div className="mb-2 flex items-center gap-2">
-                      <span className="bg-primary/10 text-primary inline-flex rounded-md px-2 py-0.5 text-xs font-semibold tracking-wide">
+                <Reveal delay={i * 90}>
+                  <div className="lg:pr-6">
+                    <div className="flex items-center gap-2">
+                      <span className="label-mono text-accent-ikn tabular-nums">
                         {tahap.periode}
                       </span>
                       {pertama ? (
-                        <span className="border-destructive/30 text-destructive inline-flex rounded-md border px-2 py-0.5 text-[0.65rem] font-semibold tracking-wide uppercase">
+                        <span className="border-border text-muted-foreground rounded-full border px-2 py-0.5 font-mono text-[0.6rem] tracking-wider uppercase">
                           Mulai
                         </span>
                       ) : null}
                       {terakhir ? (
-                        <span className="border-primary/40 text-primary inline-flex rounded-md border px-2 py-0.5 text-[0.65rem] font-semibold tracking-wide uppercase">
+                        <span className="border-accent-ikn/40 text-accent-ikn rounded-full border px-2 py-0.5 font-mono text-[0.6rem] tracking-wider uppercase">
                           Target
                         </span>
                       ) : null}
-                      <span className="text-muted-foreground/60 ml-auto text-xs font-medium tabular-nums">
-                        {String(i + 1).padStart(2, '0')}/{String(jumlah).padStart(2, '0')}
-                      </span>
                     </div>
 
-                    <h3 className="text-base font-semibold text-balance">
+                    <h3 className="mt-4 text-xl leading-snug tracking-tight text-balance">
                       {tahap.judul}
                     </h3>
-                    <p className="text-muted-foreground mt-2 text-sm text-pretty">
+                    <p className="text-muted-foreground mt-2.5 text-sm leading-relaxed text-pretty">
                       {tahap.deskripsi}
                     </p>
+
+                    <span
+                      aria-hidden="true"
+                      className="text-muted-foreground/40 mt-4 block font-mono text-xs tabular-nums"
+                    >
+                      {String(i + 1).padStart(2, '0')} / {String(jumlah).padStart(2, '0')}
+                    </span>
                   </div>
                 </Reveal>
               </li>

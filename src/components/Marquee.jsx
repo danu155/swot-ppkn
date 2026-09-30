@@ -1,32 +1,37 @@
 import { cn } from '@/lib/utils'
 
 /**
- * Strip bergulir horizontal ala situs modern (21st.dev/magicui).
+ * Strip bergulir horizontal ala situs editorial modern.
  * Memakai animasi CSS murni (keyframes `marquee`) — ringan, tanpa JS.
  * Nonaktif otomatis saat `prefers-reduced-motion` (lihat index.css).
+ * Dihentikan sementara saat kursor berada di atasnya.
  */
 export default function Marquee({ items, className }) {
   if (!items?.length) return null
 
-  // Dua salinan berjejer agar loop terlihat mulus.
+  // Dua salinan berjejer agar loop terlihat mulus (track bergeser -50%).
   const track = [...items, ...items]
 
   return (
     <div
       className={cn(
-        'group relative flex overflow-hidden border-y py-4 select-none',
+        'group relative flex overflow-hidden border-y py-5 select-none',
         className,
       )}
       aria-hidden="true"
     >
-      <ul className="animate-marquee flex shrink-0 items-center gap-10 pr-10 group-hover:[animation-play-state:paused]">
+      {/* Gradien pemudar di kedua ujung agar keluar-masuk terasa halus */}
+      <div className="from-background pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r to-transparent" />
+      <div className="from-background pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l to-transparent" />
+
+      <ul className="animate-marquee flex shrink-0 items-center gap-12 pr-12 group-hover:[animation-play-state:paused]">
         {track.map((item, i) => (
           <li
             key={`${item}-${i}`}
-            className="flex items-center gap-10 text-sm font-semibold tracking-[0.16em] whitespace-nowrap uppercase"
+            className="flex items-center gap-12 text-sm whitespace-nowrap"
           >
-            {item}
-            <span className="bg-border size-1.5 rounded-full" />
+            <span className="label-mono text-muted-foreground">{item}</span>
+            <span className="bg-accent-ikn/50 size-1 rotate-45" />
           </li>
         ))}
       </ul>

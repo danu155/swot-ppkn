@@ -79,6 +79,10 @@ function StatNilai({ nilai, aktif }) {
   )
 }
 
+/**
+ * Baris angka kunci gaya editorial: angka serif besar di atas, label mono kecil
+ * di bawah, dipisah garis tipis vertikal. Menggantikan deretan "chip" bulat.
+ */
 export default function StatChips({ items, className }) {
   const ref = useRef(null)
   const inView = useInView(ref)
@@ -88,23 +92,26 @@ export default function StatChips({ items, className }) {
   return (
     <ul
       ref={ref}
-      className={cn('flex flex-wrap justify-center gap-3', className)}
+      className={cn(
+        'grid grid-cols-1 divide-y border-y sm:grid-cols-3 sm:divide-x sm:divide-y-0',
+        className,
+      )}
     >
       {items.map((stat, i) => (
         <li
           key={stat.label}
           style={{ transitionDelay: `${i * 90}ms` }}
           className={cn(
-            'border-border bg-card flex max-w-xs items-center gap-3 rounded-xl border px-4 py-3 text-left shadow-xs transition-[opacity,transform] duration-500',
+            'flex flex-col gap-2 px-0 py-6 transition-[opacity,transform] duration-500 sm:px-6 sm:first:pl-0 sm:last:pr-0',
             inView
               ? 'translate-y-0 opacity-100'
               : 'translate-y-3 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
           )}
         >
-          <span className="text-primary min-w-[3.5rem] text-2xl font-semibold tabular-nums">
+          <span className="text-4xl font-semibold tracking-tight tabular-nums sm:text-5xl">
             <StatNilai nilai={stat.nilai} aktif={inView} />
           </span>
-          <span className="text-muted-foreground text-xs leading-snug text-pretty sm:text-sm">
+          <span className="text-muted-foreground max-w-[18ch] text-sm leading-snug text-pretty">
             {stat.label}
           </span>
         </li>

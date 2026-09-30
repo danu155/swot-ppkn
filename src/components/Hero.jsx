@@ -1,110 +1,178 @@
-import { ArrowDown, MapPin } from 'lucide-react'
+import { lazy, Suspense } from 'react'
 
-import { BeamsBackground } from '@/components/ui/beams-background'
+import { ArrowDown, ArrowUpRight } from 'lucide-react'
+
+import Logomark from '@/components/Logomark'
+import Reveal from '@/components/Reveal'
 import { Button } from '@/components/ui/button'
+import { useWebGLSupport } from '@/lib/use-canvas'
 import { meta } from '@/data'
+import { cn } from '@/lib/utils'
+
+// three.js hanya diunduh saat Hero benar-benar dirender (bukan di bundel awal).
+const HeroScene = lazy(() => import('@/components/three/HeroScene'))
+
+// Sumber angka kunci tetap dari data.js (tidak ada fakta yang di-hardcode).
+const sorotan = meta.section.latarBelakang.stats
 
 /**
- * Latar dekoratif Hero bertema merah-putih.
- *  - <BeamsBackground> : berkas cahaya bergerak (komponen 21st.dev), warnanya
- *    diambil dari token tema `--beam-*` → nuansa merah.
- *  - Bola cahaya merah melayang pelan (aurora) + gradien dasar.
- *  - Garis diagonal pinstripe yang bergerak sangat lambat.
- * Semua lapisan statis-samar dan pointer-events-none. Gerakan dihentikan bila
- * pengguna mengaktifkan `prefers-reduced-motion`.
+ * Fallback statis untuk Hero saat WebGL tidak tersedia atau scene masih dimuat:
+ * orb bergradien murni CSS agar tata letak tidak pernah kosong.
  */
-function HeroBackdrop() {
+function OrbFallback({ className }) {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      className={cn('relative grid place-items-center', className)}
     >
-      {/* (1) Basis: gradien hangat + selubung putih sebagai DASAR.
-             Veil diletakkan paling bawah agar TIDAK memutihkan berkas cahaya. */}
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--destructive)_22%,var(--background))_0%,color-mix(in_oklab,var(--destructive)_7%,var(--background))_42%,var(--background)_78%)]" />
-      <div className="absolute -top-28 left-1/2 size-[46rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,color-mix(in_oklab,var(--background)_62%,transparent),transparent_72%)]" />
-
-      {/* (2) Aurora: bola cahaya merah melayang.
-             Wrapper menangani pemusatan (translate-x-1/2); animasi float hanya
-             mengurus sumbu Y & skala pada elemen di dalamnya. */}
-      <div className="absolute -top-40 left-1/2 size-[46rem] -translate-x-1/2">
-        <div className="motion-safe:animate-float size-full rounded-full bg-[radial-gradient(closest-side,color-mix(in_oklab,var(--destructive)_46%,transparent),transparent_72%)]" />
+      <div className="animate-float border-accent-ikn/20 bg-accent-ikn/5 size-64 rounded-full border sm:size-80 lg:size-[26rem]">
+        <div className="from-accent-ikn/35 via-accent-brass/25 absolute inset-6 rounded-full bg-gradient-to-br to-transparent blur-2xl" />
+        <div className="border-accent-ikn/30 absolute inset-10 rounded-full border border-dashed" />
       </div>
-
-      {/* (3) Berkas cahaya bergerak (nuansa merah). */}
-      <BeamsBackground
-        className="absolute inset-0 h-full"
-        intensity="strong"
-        count={14}
-        speed={1}
-        cssBlur={3}
-      />
-
-      {/* (4) Garis diagonal tipis bernuansa merah-putih, bergerak pelan */}
-      <div className="animate-diagonal absolute -inset-40 opacity-[0.06] [background-image:repeating-linear-gradient(135deg,var(--destructive)_0_1px,transparent_1px_16px)] [background-size:128px_128px] dark:opacity-[0.09]" />
-
-      {/* (5) Vignette tipis di tepi bawah agar judul tetap kontras */}
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
     </div>
   )
 }
 
-/**
- * Memberi aksen gradasi merah berkilau pada bagian "(IKN)" di judul.
- * Murni tampilan; teks tetap utuh dari data.js.
- */
-function JudulBeraksen({ teks }) {
-  const penanda = '(IKN)'
-  if (!teks.includes(penanda)) return teks
+function Scene({ className }) {
+  const webgl = useWebGLSupport()
 
-  const [awal, akhir] = teks.split(penanda)
+  if (!webgl) return <OrbFallback className={className} />
+
   return (
-    <>
-      {awal?.trimEnd()}{' '}
-      <span className="animate-shimmer bg-[linear-gradient(100deg,var(--destructive),color-mix(in_oklab,var(--destructive)_45%,var(--foreground))_50%,var(--destructive))] bg-[length:220%_100%] bg-clip-text text-transparent">
-        {penanda}
-      </span>
-      {akhir}
-    </>
+    <Suspense fallback={<OrbFallback className={className} />}>
+      <HeroScene className={cn('h-full w-full', className)} />
+    </Suspense>
   )
 }
 
 export default function Hero() {
   return (
-    <header id="beranda" className="relative isolate overflow-hidden">
-      <HeroBackdrop />
+    <header
+      id="beranda"
+      className="paper-grain relative isolate overflow-hidden border-b"
+    >
+      {/* Grid tipis arsitektural di latar, meredup ke bawah */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--paper-line)_1px,transparent_1px),linear-gradient(to_bottom,var(--paper-line)_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)]"
+      />
 
-      <div className="mx-auto flex max-w-3xl flex-col items-center px-4 py-20 text-center sm:py-28 lg:py-32">
-        <span className="border-destructive/25 bg-card/70 text-destructive inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium shadow-xs backdrop-blur-sm">
-          <MapPin className="size-3.5" aria-hidden="true" />
-          {meta.labelJelajahi}
-        </span>
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+        {/* Baris meta atas — nuansa lembar laporan */}
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b py-4">
+          <div className="flex items-center gap-3">
+            <Logomark className="text-primary size-8" />
+            <div className="leading-tight">
+              <p className="text-sm font-semibold tracking-tight">IKN</p>
+              <p className="label-mono text-muted-foreground/80">
+                Nusantara · Kalimantan Timur
+              </p>
+            </div>
+          </div>
+          <p className="label-mono text-muted-foreground/80">
+            Berkas Analisis · 2022–2045
+          </p>
+        </div>
 
-        <h1 className="mt-6 text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-4xl lg:text-5xl">
-          <JudulBeraksen teks={meta.judul} />
-        </h1>
+        {/* Grid utama: teks asimetris (7) + scene 3D (5) */}
+        <div className="grid items-center gap-12 py-16 lg:grid-cols-12 lg:gap-8 lg:py-24">
+          <div className="lg:col-span-7 lg:pr-8">
+            <Reveal>
+              <div className="border-accent-ikn/30 bg-accent-ikn/5 text-accent-ikn inline-flex items-center gap-2 rounded-full border px-3 py-1">
+                <span className="bg-accent-ikn size-1.5 animate-pulse rounded-full" />
+                <span className="label-mono">{meta.labelJelajahi}</span>
+              </div>
+            </Reveal>
 
-        <p className="text-muted-foreground mt-6 max-w-2xl text-base text-pretty sm:text-lg">
-          {meta.subjudul}
-        </p>
+            <Reveal delay={80}>
+              <h1 className="mt-6 text-4xl leading-[0.98] tracking-tight text-balance sm:text-5xl lg:text-6xl">
+                Analisis <span className="italic">SWOT</span> Ibu Kota{' '}
+                <span className="relative inline-block">
+                  <span className="relative z-10">Nusantara</span>
+                  <span
+                    aria-hidden="true"
+                    className="bg-accent-ikn/25 absolute inset-x-0 bottom-1 -z-0 h-3 -rotate-1"
+                  />
+                </span>
+              </h1>
+            </Reveal>
 
-        <div className="mt-8">
-          <Button asChild size="lg" className="group">
-            <a href="#swot">
-              {meta.tombolMulai}
-              <ArrowDown
-                className="size-4 transition-transform duration-200 group-hover:translate-y-0.5"
+            <Reveal delay={160}>
+              <p className="text-muted-foreground mt-6 max-w-xl text-lg text-pretty">
+                {meta.subjudul}
+              </p>
+            </Reveal>
+
+            <Reveal delay={240}>
+              <div className="mt-9 flex flex-wrap items-center gap-3">
+                <Button asChild size="lg" className="group h-12 rounded-full px-6">
+                  <a href="#swot">
+                    {meta.tombolMulai}
+                    <ArrowDown
+                      className="size-4 transition-transform duration-200 group-hover:translate-y-0.5"
+                      aria-hidden="true"
+                    />
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="ghost"
+                  className="group h-12 rounded-full px-5"
+                >
+                  <a href="#latar-belakang">
+                    Baca latar belakang
+                    <ArrowUpRight
+                      className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      aria-hidden="true"
+                    />
+                  </a>
+                </Button>
+              </div>
+            </Reveal>
+
+            {/* Baris angka kunci dengan garis pemisah tipis */}
+            <Reveal delay={320}>
+              <dl className="mt-12 grid max-w-xl grid-cols-3 divide-x divide-border">
+                {sorotan.map((s) => (
+                  <div key={s.label} className="px-4 first:pl-0">
+                    <dt className="text-2xl font-semibold tracking-tight tabular-nums sm:text-3xl">
+                      {s.nilai}
+                    </dt>
+                    <dd className="text-muted-foreground mt-1 text-xs leading-snug text-pretty">
+                      {s.label}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
+          </div>
+
+          {/* Focal point 3D */}
+          <div className="lg:col-span-5">
+            <div className="relative mx-auto aspect-square w-full max-w-lg">
+              {/* Cahaya lembut di belakang orb */}
+              <div
                 aria-hidden="true"
+                className="bg-accent-ikn/10 absolute inset-0 -z-10 rounded-full blur-3xl"
               />
-            </a>
-          </Button>
+              <Scene className="absolute inset-0" />
+
+              {/* Anotasi mengambang bergaya diagram teknis */}
+              <div className="pointer-events-none absolute right-0 bottom-6 hidden max-w-[11rem] border-l-2 border-accent-ikn/60 pl-3 text-left sm:block">
+                <p className="label-mono text-accent-ikn">Inti / Core</p>
+                <p className="text-muted-foreground mt-1 text-xs text-pretty">
+                  Pemerintahan terencana, hijau, dan terhubung.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Pita pembatas bernuansa merah di kaki Hero */}
+      {/* Pita pemisah tipis di kaki Hero */}
       <div aria-hidden="true" className="absolute inset-x-0 bottom-0">
-        <div className="from-destructive/60 via-destructive/25 h-0.5 bg-gradient-to-r to-transparent" />
-        <div className="bg-border h-px" />
+        <div className="via-accent-ikn/50 h-px bg-gradient-to-r from-transparent to-transparent" />
       </div>
     </header>
   )

@@ -1,11 +1,15 @@
-import Reveal from '@/components/Reveal'
+import { EditorialHeading } from '@/components/EditorialHeading'
 import { cn } from '@/lib/utils'
 
+/**
+ * Pembungkus bagian dengan ritme vertikal konsisten dan scroll-margin untuk
+ * anchor. Semua section memakai ini agar irama halaman terasa satu naskah.
+ */
 export function Section({ id, className, children, ...props }) {
   return (
     <section
       id={id}
-      className={cn('scroll-mt-20 py-16 sm:py-20 lg:py-24', className)}
+      className={cn('scroll-mt-24 py-20 sm:py-24 lg:py-32', className)}
       {...props}
     >
       {children}
@@ -13,22 +17,21 @@ export function Section({ id, className, children, ...props }) {
   )
 }
 
-export function SectionHeading({ eyebrow, judul, deskripsi, className }) {
+/**
+ * Shorthand judul bagian. Mendelegasikan ke EditorialHeading agar bila gaya
+ * heading berubah, seluruh halaman ikut berubah dari satu tempat.
+ */
+export function SectionHeading({ eyebrow, judul, deskripsi, className, bab, align }) {
   return (
-    <Reveal className={cn('mx-auto max-w-2xl text-center', className)}>
-      {eyebrow ? (
-        <p className="text-primary mb-3 text-xs font-semibold tracking-[0.18em] uppercase">
-          {eyebrow}
-        </p>
-      ) : null}
-      <h2 className="text-2xl font-semibold tracking-tight text-balance sm:text-3xl lg:text-4xl">
-        {judul}
-      </h2>
-      {deskripsi ? (
-        <p className="text-muted-foreground mt-4 text-pretty sm:text-lg">
-          {deskripsi}
-        </p>
-      ) : null}
-    </Reveal>
+    <EditorialHeading
+      bab={bab}
+      eyebrow={eyebrow}
+      judul={judul}
+      deskripsi={deskripsi}
+      className={className}
+      align={align}
+    />
   )
 }
+
+export default Section

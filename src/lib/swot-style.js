@@ -8,10 +8,13 @@ import {
 /**
  * Peta gaya per aspek SWOT. Kunci mengikuti field `warna` pada data.js
  * (green / red / blue / orange). Murni presentasional — konten tetap dari data.js.
+ *
+ * Setiap aspek juga membawa singkatan (mis. "S") untuk grafik SWOT besar.
  */
 export const gayaAspek = {
   green: {
     Icon: ShieldCheck,
+    singkatan: 'S',
     teks: 'text-swot-strengths',
     latarIkon: 'bg-swot-strengths/10',
     garis: 'before:bg-swot-strengths',
@@ -19,6 +22,7 @@ export const gayaAspek = {
   },
   red: {
     Icon: TriangleAlert,
+    singkatan: 'W',
     teks: 'text-swot-weaknesses',
     latarIkon: 'bg-swot-weaknesses/10',
     garis: 'before:bg-swot-weaknesses',
@@ -26,6 +30,7 @@ export const gayaAspek = {
   },
   blue: {
     Icon: Lightbulb,
+    singkatan: 'O',
     teks: 'text-swot-opportunities',
     latarIkon: 'bg-swot-opportunities/10',
     garis: 'before:bg-swot-opportunities',
@@ -33,6 +38,7 @@ export const gayaAspek = {
   },
   orange: {
     Icon: ShieldAlert,
+    singkatan: 'T',
     teks: 'text-swot-threats',
     latarIkon: 'bg-swot-threats/10',
     garis: 'before:bg-swot-threats',
