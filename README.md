@@ -6,7 +6,8 @@ lengkap dengan latar belakang dan timeline pembangunan hingga 2045.
 - Tanpa backend, tanpa database, tanpa login.
 - React + Vite + Tailwind CSS, komponen bergaya shadcn/ui (kompatibel 21st.dev).
 - Hasil build berupa berkas statis siap dideploy ke Vercel / Netlify / GitHub Pages.
-- Mendukung mode terang & gelap, serta animasi reveal halus saat scroll.
+- Desain modern-formal bertema putih bersih, animasi reveal halus saat scroll,
+  dan peta Indonesia SVG beranimasi dengan penanda lokasi IKN.
 
 ## Menjalankan secara lokal
 
@@ -93,33 +94,34 @@ Lalu di **Settings → Pages**, pilih branch `gh-pages` sebagai sumber.
 ## Struktur proyek
 
 ```
-├─ index.html                 # HTML + meta + skrip anti-flash tema
+├─ index.html                 # HTML + meta
 ├─ src/
 │  ├─ data.js                 # SATU sumber konten
 │  ├─ App.jsx                 # Susunan halaman
-│  ├─ index.css               # Tailwind + token warna (light/dark)
+│  ├─ index.css               # Tailwind + token warna + keyframes animasi
 │  ├─ lib/
 │  │  ├─ utils.js             # Helper cn()
 │  │  ├─ swot-style.js        # Peta warna & ikon tiap aspek
-│  │  └─ use-spotlight.js     # Hook posisi kursor (CSS variable)
+│  │  └─ peta-indonesia.js    # Geometri SVG peta (GeoJSON disederhanakan)
 │  └─ components/
-│     ├─ SiteHeader.jsx       # Header sticky + navigasi + toggle tema
+│     ├─ SiteHeader.jsx       # Header sticky + navigasi + progres baca
 │     ├─ ScrollProgress.jsx   # Garis progres baca di header
-│     ├─ Hero.jsx             # Bagian 1
-│     ├─ LatarBelakang.jsx    # Bagian 2 (+ stat chips)
+│     ├─ Hero.jsx             # Bagian 1 (latar foto + judul + angka kunci)
+│     ├─ HeroBackground.jsx   # Foto IKN full-bleed (WebP + fallback JPG)
+│     ├─ PetaIndonesia.jsx    # Peta SVG beranimasi + penanda IKN
+│     ├─ LatarBelakang.jsx    # Bagian 2 (panel peta + stat chips)
 │     ├─ StatChips.jsx        # Chip angka dengan count-up
 │     ├─ AspekMarquee.jsx     # Pita bergulir nama aspek
 │     ├─ Marquee.jsx          # Komponen marquee (CSS keyframes)
-│     ├─ AnalisisSwot.jsx     # Bagian 3 (kartu dapat di-expand)
+│     ├─ AnalisisSwot.jsx     # Bagian 3 (kartu + popup detail)
 │     ├─ Timeline.jsx         # Bagian 4
 │     ├─ Footer.jsx           # Bagian 5
-│     ├─ Section.jsx          # Pembantu judul section
+│     ├─ Section.jsx          # Pembantu pembungkus & judul section
+│     ├─ EditorialHeading.jsx # Judul bagian
 │     ├─ Reveal.jsx           # Animasi fade/slide-in saat scroll
-│     ├─ SpotlightOverlay.jsx # Lapisan sorot kursor (efek spotlight)
-│     ├─ ThemeToggle.jsx      # Tombol mode terang/gelap
-│     ├─ theme-provider.jsx   # State tema + persistensi localStorage
-│     └─ ui/                  # Komponen dasar (button, card, accordion,
-│                             #   beams-background — latar berkas cahaya)
+│     ├─ Logomark.jsx         # Monogram IKN (SVG)
+│     ├─ Rule.jsx             # Garis pemisah
+│     └─ ui/                  # Komponen dasar (button, dialog, aspect-card)
 ├─ vercel.json
 ├─ netlify.toml
 └─ .nvmrc
@@ -128,8 +130,10 @@ Lalu di **Settings → Pages**, pilih branch `gh-pages` sebagai sumber.
 ## Aksesibilitas & performa
 
 - Animasi menghormati `prefers-reduced-motion`.
-- Navigasi kartu SWOT memakai pola accordion (Radix) yang ramah keyboard
-  (`aria-expanded`, `aria-controls`).
-- Tema awal dipasang sebelum paint untuk menghindari kedipan (anti-flash).
+- Detail tiap aspek SWOT dibuka lewat dialog (Radix) yang ramah keyboard dan
+  mengunci fokus.
+- Warna teks diuji memenuhi kontras WCAG AA pada latar putih.
+- Tanpa WebGL/three.js: seluruh visual (peta) berupa SVG/CSS sehingga
+  bundel ringan dan tajam di semua layar.
 # swot-ppkn
 # swot-ppkn

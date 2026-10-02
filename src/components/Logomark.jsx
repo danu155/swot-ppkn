@@ -3,12 +3,12 @@ import { cn } from '@/lib/utils'
 /**
  * Monogram IKN — tanda SVG dengan garis yang "tergambar" saat muncul.
  *
- * Sengaja memakai SVG (bukan WebGL) agar hanya ada SATU konteks GPU di halaman
- * (scene 3D di Hero). Garis digambar memakai animasi stroke-dashoffset CSS yang
- * otomatis berhenti saat prefers-reduced-motion.
+ * Sengaja memakai SVG (bukan kanvas/WebGL) agar ringan dan tajam di semua
+ * ukuran. Garis digambar memakai animasi stroke-dashoffset CSS yang otomatis
+ * berhenti saat prefers-reduced-motion.
  *
  * Bentuk: huruf "N" dari tiga goresan (mewakili Nusantara) yang mengapit sebuah
- * wajik merah — penanda lokasi ibu kota baru.
+ * wajik hijau — penanda lokasi ibu kota baru.
  */
 export default function Logomark({ className, animated = true }) {
   return (

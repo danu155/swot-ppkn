@@ -3,16 +3,16 @@ import { Section, SectionHeading } from '@/components/Section'
 import { meta, timeline } from '@/data'
 
 /**
- * Timeline editorial: rel horizontal di desktop, daftar bertumpuk di mobile.
- * Tiap tahap digambar sebagai entri berkas — periode mono, tahun besar, dan
- * garis waktu yang menghubungkan penanda.
+ * Timeline pembangunan: rel horizontal di desktop, daftar bertumpuk di mobile.
+ * Tiap tahap digambar sebagai kartu — periode mono, judul, deskripsi, dan
+ * lencana "Mulai"/"Target" di ujung-ujungnya.
  */
 export default function Timeline() {
   const { judul, deskripsi } = meta.section.timeline
   const jumlah = timeline.length
 
   return (
-    <Section id="timeline" className="bg-muted/30 border-y">
+    <Section id="timeline" className="border-y bg-muted/30">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <SectionHeading
           bab="03"
@@ -39,17 +39,17 @@ export default function Timeline() {
                   aria-hidden="true"
                   className="bg-background ring-border absolute top-1 left-0 flex size-4 items-center justify-center rounded-full ring-4 lg:top-0"
                 >
-                  <span className="bg-accent-ikn size-1.5 rounded-full" />
+                  <span className="bg-accent-ikn size-2 rounded-full" />
                 </span>
 
-                <Reveal delay={i * 90}>
-                  <div className="lg:pr-6">
-                    <div className="flex items-center gap-2">
+                <Reveal delay={i * 100} className="h-full">
+                  <div className="bg-card h-full rounded-2xl border p-6 shadow-[0_1px_2px_color-mix(in_oklab,var(--foreground)_8%,transparent)] transition-shadow duration-300 hover:shadow-[0_30px_60px_-38px_color-mix(in_oklab,var(--foreground)_30%,transparent)]">
+                    <div className="flex flex-wrap items-center gap-2">
                       <span className="label-mono text-accent-ikn tabular-nums">
                         {tahap.periode}
                       </span>
                       {pertama ? (
-                        <span className="border-border text-muted-foreground rounded-full border px-2 py-0.5 font-mono text-[0.6rem] tracking-wider uppercase">
+                        <span className="text-muted-foreground rounded-full border px-2 py-0.5 font-mono text-[0.6rem] tracking-wider uppercase">
                           Mulai
                         </span>
                       ) : null}
@@ -60,7 +60,7 @@ export default function Timeline() {
                       ) : null}
                     </div>
 
-                    <h3 className="mt-4 text-xl leading-snug tracking-tight text-balance">
+                    <h3 className="mt-4 text-lg leading-snug font-semibold tracking-tight text-balance">
                       {tahap.judul}
                     </h3>
                     <p className="text-muted-foreground mt-2.5 text-sm leading-relaxed text-pretty">
@@ -69,9 +69,10 @@ export default function Timeline() {
 
                     <span
                       aria-hidden="true"
-                      className="text-muted-foreground/40 mt-4 block font-mono text-xs tabular-nums"
+                      className="text-muted-foreground mt-4 block font-mono text-xs tabular-nums"
                     >
-                      {String(i + 1).padStart(2, '0')} / {String(jumlah).padStart(2, '0')}
+                      {String(i + 1).padStart(2, '0')} /{' '}
+                      {String(jumlah).padStart(2, '0')}
                     </span>
                   </div>
                 </Reveal>

@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react'
 
 import Reveal from '@/components/Reveal'
 import { Section, SectionHeading } from '@/components/Section'
+import { AspectCard } from '@/components/ui/aspect-card'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -13,62 +14,57 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { NotchedCard } from '@/components/ui/notched-card'
 import { meta, swot } from '@/data'
 import { gayaUntuk } from '@/lib/swot-style'
 import { cn } from '@/lib/utils'
 
 /**
- * Cover kartu aspek: pengganti "foto" pada referensi. Komposisi editorial —
- * pil kategori di kiri-atas, "medali" ikon aspek sebagai fokus, dan huruf
- * raksasa samar sebagai latar.
+ * Cover kartu aspek: komposisi ringkas dengan huruf raksasa samar sebagai latar,
+ * kisi tipis, pil kategori di kiri-atas, dan medali ikon di tengah.
  */
 function CoverAspek({ item, gaya }) {
-  const { Icon, singkatan, coverBg, teks, pill, hex } = gaya
+  const { Icon, singkatan, coverBg, teks, hex, kaca } = gaya
 
   return (
     <div className={cn('absolute inset-0', coverBg)}>
-      {/* Pola garis halus */}
+      {/* Kisi tipis */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 opacity-40 [background-image:linear-gradient(var(--paper-line)_1px,transparent_1px),linear-gradient(90deg,var(--paper-line)_1px,transparent_1px)] [background-size:22px_22px] [mask-image:radial-gradient(circle_at_50%_45%,black,transparent_82%)]"
+        className="absolute inset-0 opacity-50 [background-image:linear-gradient(var(--paper-line)_1px,transparent_1px),linear-gradient(90deg,var(--paper-line)_1px,transparent_1px)] [background-size:20px_20px] [mask-image:radial-gradient(circle_at_50%_40%,black,transparent_80%)]"
       />
 
-      {/* Huruf raksasa samar sebagai latar (di kiri-bawah) */}
+      {/* Huruf raksasa samar di kiri-bawah */}
       <span
         aria-hidden="true"
         className={cn(
-          'pointer-events-none absolute -bottom-12 left-0 font-display text-[8rem] leading-none font-semibold opacity-[0.12] select-none',
+          'font-display pointer-events-none absolute -bottom-10 left-1 text-[7rem] leading-none font-semibold opacity-[0.1] select-none',
           teks,
         )}
       >
         {singkatan}
       </span>
 
-      {/* Pil kategori (kiri-atas) */}
+      {/* Pil kategori */}
       <span
         className={cn(
-          'bg-background/70 absolute top-3.5 left-3.5 rounded-full border px-2.5 py-0.5 font-mono text-[0.6rem] font-medium tracking-[0.18em] uppercase backdrop-blur-md',
-          pill,
+          'bg-background/70 absolute top-3.5 left-3.5 rounded-full px-2.5 py-0.5 font-mono text-[0.6rem] font-medium tracking-[0.18em] uppercase ring-1 backdrop-blur-md',
+          kaca,
+          teks,
         )}
       >
         {item.kategori}
       </span>
 
-      {/* Medali ikon aspek */}
+      {/* Medali ikon */}
       <div className="absolute inset-0 flex items-center justify-center">
         <span
-          className="flex size-16 items-center justify-center rounded-full transition-transform duration-500 group-hover:scale-105 group-focus-visible:scale-105"
+          className="ring-background/60 flex size-14 items-center justify-center rounded-2xl ring-1 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:scale-105"
           style={{
-            backgroundColor: `color-mix(in oklab, ${hex} 12%, transparent)`,
-            boxShadow: `inset 0 0 0 1px color-mix(in oklab, ${hex} 28%, transparent)`,
+            backgroundColor: `color-mix(in oklab, ${hex} 14%, transparent)`,
+            boxShadow: `inset 0 0 0 1px color-mix(in oklab, ${hex} 26%, transparent)`,
           }}
         >
-          <Icon
-            className={cn('size-8', teks)}
-            strokeWidth={1.6}
-            aria-hidden="true"
-          />
+          <Icon className={cn('size-7', teks)} strokeWidth={1.7} aria-hidden="true" />
         </span>
       </div>
     </div>
@@ -81,7 +77,7 @@ export default function AnalisisSwot() {
 
   return (
     <Section id="swot">
-      <div className="mx-auto max-w-[90rem] px-6 lg:px-10">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <SectionHeading
           bab="02"
           eyebrow="Empat Aspek"
@@ -91,15 +87,15 @@ export default function AnalisisSwot() {
           className="mx-auto"
         />
 
-        <div className="mt-10 grid gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {swot.map((item, i) => {
             const gaya = gayaUntuk(item.warna)
             return (
               <Reveal key={item.kategori} delay={i * 90} className="h-full">
-                <NotchedCard
+                <AspectCard
                   onOpen={() => setAktif(item)}
                   title={item.label}
-                  meta={`${item.kategori} · 3 poin`}
+                  meta={item.kategori}
                   accent={gaya.hex}
                   accentForeground="#ffffff"
                   cover={<CoverAspek item={item} gaya={gaya} />}
@@ -141,11 +137,10 @@ function AspectDetail({ item }) {
             gaya.latarIkon,
           )}
         >
-          {/* Watermark huruf raksasa (di kiri-bawah) */}
           <span
             aria-hidden="true"
             className={cn(
-              'pointer-events-none absolute -bottom-14 -left-3 font-display text-[11rem] leading-none font-semibold opacity-[0.12] select-none',
+              'font-display pointer-events-none absolute -bottom-14 -left-3 text-[11rem] leading-none font-semibold opacity-[0.12] select-none',
               teks,
             )}
           >
@@ -155,17 +150,18 @@ function AspectDetail({ item }) {
           <DialogHeader className="relative gap-5">
             <span
               className={cn(
-                'flex size-14 items-center justify-center rounded-2xl',
-                'bg-background/70 ring-1',
+                'bg-background/70 flex size-14 items-center justify-center rounded-2xl ring-1',
                 teks,
               )}
-              style={{ '--tw-ring-color': `color-mix(in oklab, ${hex} 30%, transparent)` }}
+              style={{
+                '--tw-ring-color': `color-mix(in oklab, ${hex} 30%, transparent)`,
+              }}
             >
               <Icon className="size-7" strokeWidth={1.7} aria-hidden="true" />
             </span>
             <div className="space-y-2">
               <span className={cn('label-mono block', teks)}>{item.kategori}</span>
-              <DialogTitle className="font-display text-3xl leading-none font-medium tracking-tight">
+              <DialogTitle className="font-display text-3xl leading-none font-semibold tracking-tight">
                 {item.label}
               </DialogTitle>
             </div>
@@ -198,7 +194,7 @@ function AspectDetail({ item }) {
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div className="space-y-2">
-                  <h4 className="text-base font-semibold text-foreground sm:text-[1.05rem]">
+                  <h4 className="text-foreground text-base font-semibold sm:text-[1.05rem]">
                     {poin.judul}
                   </h4>
                   <p className="text-muted-foreground text-base leading-relaxed text-pretty">

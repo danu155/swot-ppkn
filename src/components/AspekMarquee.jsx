@@ -9,7 +9,7 @@ export default function AspekMarquee() {
   const items = swot.map((s) => `${s.kategori} · ${s.label}`)
 
   return (
-    <div className="bg-muted/40 text-muted-foreground/80">
+    <div className="bg-muted/40">
       <Marquee items={items} />
     </div>
   )

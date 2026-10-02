@@ -21,7 +21,7 @@ export function Rule({ label, className }) {
   return (
     <div className={cn('flex items-center gap-4', className)}>
       <span aria-hidden="true" className="bg-border h-px flex-1" />
-      <span className="label-mono text-muted-foreground/70 shrink-0">{label}</span>
+      <span className="label-mono text-muted-foreground shrink-0">{label}</span>
       <span aria-hidden="true" className="bg-border h-px flex-1" />
     </div>
   )

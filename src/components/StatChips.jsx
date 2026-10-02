@@ -46,7 +46,7 @@ function StatNilai({ nilai, aktif }) {
   return (
     <>
       {awal ? (
-        <span className="text-muted-foreground/60 font-normal">{awal}</span>
+        <span className="text-muted-foreground font-normal">{awal}</span>
       ) : null}
       {animatable && !bacaReducedMotion() ? (
         <NilaiSpring num={num} mulai={aktif} />

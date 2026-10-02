@@ -1,101 +1,59 @@
-/* Font self-host (variable) — Bricolage Grotesque untuk display/judul,
-   Inter untuk teks, JetBrains Mono untuk label/institusi. */
+/* Font self-host (variable):
+   - Plus Jakarta Sans → display/judul (modern, geometris, ramah)
+   - Inter            → teks isi
+   - JetBrains Mono   → label/mono (angka, penanda bab) */
+@import '@fontsource-variable/plus-jakarta-sans/wght.css';
 @import '@fontsource-variable/inter/opsz.css';
-@import '@fontsource-variable/bricolage-grotesque/wght.css';
 @import '@fontsource-variable/jetbrains-mono/wght.css';
 
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-@custom-variant dark (&:is(.dark *));
-
 /* ---------------------------------------------------------------------------
-   Design tokens — "Editorial Premium / Laporan Negara"
-   Palet paper hangat + tinta, dengan aksen merah IKN yang dipakai hemat.
-   Warna empat aspek SWOT diturunkan saturasinya agar terasa didesain.
+   Design tokens — "Modern Formal / Putih Bersih"
+   Latar putih netral, tinta slate gelap, aksen hijau Nusantara yang tenang.
+   Empat aspek SWOT tetap dibedakan warna, namun disaturasi agar terasa rapi.
    --------------------------------------------------------------------------- */
 
 :root {
-  --radius: 0.5rem;
+  --radius: 0.75rem;
 
-  /* Permukaan kertas hangat */
-  --background: oklch(0.984 0.005 85);
-  --foreground: oklch(0.215 0.014 55);
-  --card: oklch(0.997 0.003 85);
-  --card-foreground: oklch(0.215 0.014 55);
-  --popover: oklch(0.997 0.003 85);
-  --popover-foreground: oklch(0.215 0.014 55);
+  /* Permukaan putih bersih (sedikit sejuk, bukan kertas hangat) */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.24 0.02 250);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.24 0.02 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.24 0.02 250);
 
-  /* Tinta sebagai warna utama */
-  --primary: oklch(0.235 0.016 55);
-  --primary-foreground: oklch(0.985 0.005 85);
-  --secondary: oklch(0.955 0.007 82);
-  --secondary-foreground: oklch(0.28 0.014 55);
-  --muted: oklch(0.958 0.006 82);
-  --muted-foreground: oklch(0.5 0.013 58);
-  --accent: oklch(0.945 0.012 70);
-  --accent-foreground: oklch(0.28 0.014 55);
+  /* Hijau Nusantara sebagai warna utama (tenang & formal) */
+  --primary: oklch(0.42 0.086 165);
+  --primary-foreground: oklch(0.99 0.005 165);
+  --secondary: oklch(0.968 0.004 250);
+  --secondary-foreground: oklch(0.3 0.02 250);
+  --muted: oklch(0.972 0.003 250);
+  --muted-foreground: oklch(0.52 0.015 255);
+  --accent: oklch(0.96 0.02 165);
+  --accent-foreground: oklch(0.3 0.05 165);
 
-  --destructive: oklch(0.53 0.19 27);
+  --destructive: oklch(0.55 0.18 27);
   --destructive-foreground: oklch(0.99 0.005 85);
 
-  --border: oklch(0.888 0.008 78);
-  --input: oklch(0.9 0.008 78);
-  --ring: oklch(0.53 0.19 27);
+  --border: oklch(0.92 0.004 255);
+  --input: oklch(0.92 0.004 255);
+  --ring: oklch(0.42 0.086 165);
 
   /* Aksen khas halaman */
-  --accent-ikn: oklch(0.515 0.196 27); /* merah IKN, disaring agar editorial */
-  --accent-brass: oklch(0.62 0.088 76); /* kuningan lembut untuk detail */
-  --paper-line: oklch(0.905 0.007 78);
+  --accent-ikn: oklch(0.42 0.086 165); /* hijau IKN */
+  --accent-brass: oklch(0.66 0.11 78); /* kuningan hangat untuk detail */
+  --paper-line: oklch(0.925 0.004 255);
 
-  /* Warna aspek SWOT (versi desaturasi) */
-  --swot-strengths: oklch(0.545 0.101 152);
-  --swot-weaknesses: oklch(0.535 0.175 27);
-  --swot-opportunities: oklch(0.5 0.106 258);
-  --swot-threats: oklch(0.608 0.116 64);
+  /* Warna aspek SWOT (versi desaturasi, tetap mudah dibedakan) */
+  --swot-strengths: oklch(0.5 0.1 158);
+  --swot-weaknesses: oklch(0.55 0.16 25);
+  --swot-opportunities: oklch(0.5 0.11 255);
+  --swot-threats: oklch(0.63 0.12 62);
 
-  /* Berkas cahaya (beams-background) */
-  --beam-hue: 0;
-  --beam-saturation: 62%;
-  --beam-lightness: 46%;
-}
-
-.dark {
-  --background: oklch(0.168 0.01 66);
-  --foreground: oklch(0.955 0.006 85);
-  --card: oklch(0.205 0.011 66);
-  --card-foreground: oklch(0.955 0.006 85);
-  --popover: oklch(0.205 0.011 66);
-  --popover-foreground: oklch(0.955 0.006 85);
-
-  --primary: oklch(0.955 0.006 85);
-  --primary-foreground: oklch(0.205 0.011 66);
-  --secondary: oklch(0.252 0.012 66);
-  --secondary-foreground: oklch(0.955 0.006 85);
-  --muted: oklch(0.248 0.011 66);
-  --muted-foreground: oklch(0.712 0.012 70);
-  --accent: oklch(0.27 0.014 66);
-  --accent-foreground: oklch(0.955 0.006 85);
-
-  --destructive: oklch(0.66 0.185 27);
-  --destructive-foreground: oklch(0.168 0.01 66);
-
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 16%);
-  --ring: oklch(0.62 0.185 27);
-
-  --accent-ikn: oklch(0.66 0.19 27);
-  --accent-brass: oklch(0.76 0.085 78);
-  --paper-line: oklch(1 0 0 / 10%);
-
-  --swot-strengths: oklch(0.705 0.108 152);
-  --swot-weaknesses: oklch(0.675 0.165 27);
-  --swot-opportunities: oklch(0.685 0.104 258);
-  --swot-threats: oklch(0.748 0.115 68);
-
-  --beam-hue: 2;
-  --beam-saturation: 70%;
-  --beam-lightness: 58%;
 }
 
 @theme inline {
@@ -127,27 +85,31 @@
   --color-accent-ikn: var(--accent-ikn);
   --color-accent-brass: var(--accent-brass);
   --color-paper-line: var(--paper-line);
-  --color-beam: hsl(var(--beam-hue) var(--beam-saturation) var(--beam-lightness));
 
-  --radius-sm: calc(var(--radius) - 2px);
-  --radius-md: var(--radius);
-  --radius-lg: calc(var(--radius) + 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 6px);
 
   --font-sans:
     'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif;
   --font-display:
-    'Bricolage Grotesque Variable', ui-sans-serif, system-ui, -apple-system,
+    'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, -apple-system,
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-mono:
     'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas,
     monospace;
 
-  --animate-marquee: marquee 38s linear infinite;
+  /* Animasi dekoratif */
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-float: float 14s ease-in-out infinite;
+  --animate-float-slow: float 22s ease-in-out infinite;
+  --animate-spin-slow: spin 34s linear infinite;
+  --animate-spin-reverse: spin-reverse 26s linear infinite;
+  --animate-pulse-ring: pulse-ring 3.4s ease-out infinite;
+  --animate-draw: draw 2.4s ease-out forwards;
   --animate-shimmer: shimmer 6s ease-in-out infinite;
-  --animate-float: float 18s ease-in-out infinite;
-  --animate-bubble-in: bubble-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 
   @keyframes marquee {
     from {
@@ -158,6 +120,47 @@
     }
   }
 
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-14px);
+    }
+  }
+
+  @keyframes spin-reverse {
+    from {
+      transform: rotate(360deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
+  }
+
+  /* Gelombang cincin yang memancar dari penanda lokasi */
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(0.6);
+      opacity: 0.55;
+    }
+    80%,
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+  }
+
+  @keyframes draw {
+    from {
+      stroke-dashoffset: var(--draw-length, 1);
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
   @keyframes shimmer {
     0%,
     100% {
@@ -165,33 +168,6 @@
     }
     50% {
       background-position: 100% 50%;
-    }
-  }
-
-  /* Bola cahaya melayang pelan. Jangan pakai translateX di sini bila wrapper
-     sudah memusatkan horizontal, agar elemen tidak bergeser dua kali. */
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0) scale(1);
-      opacity: 0.8;
-    }
-    50% {
-      transform: translateY(20px) scale(1.05);
-      opacity: 1;
-    }
-  }
-
-  /* Bubble chat muncul dengan sedikit pantulan (transform-origin di kaki
-     ekor agar terasa tumbuh dari titik percakapan). */
-  @keyframes bubble-in {
-    from {
-      opacity: 0;
-      transform: translateY(8px) scale(0.94);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
     }
   }
 }
@@ -212,13 +188,13 @@
     font-feature-settings: 'cv05' 1, 'ss03' 1;
   }
 
-  /* Display sans untuk judul — Bricolage Grotesque, cukup tegas & modern. */
+  /* Display sans modern untuk judul. */
   h1,
   h2,
   h3 {
     font-family: var(--font-display);
-    font-weight: 500;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.025em;
   }
 
   ::selection {
@@ -233,16 +209,22 @@
     }
 
     .animate-marquee,
-    .animate-shimmer,
     .animate-float,
-    .animate-bubble-in {
+    .animate-float-slow,
+    .animate-spin-slow,
+    .animate-spin-reverse,
+    .animate-pulse-ring,
+    .animate-draw,
+    .animate-shimmer,
+    .logomark-draw,
+    .logomark-pop {
       animation: none !important;
     }
   }
 }
 
 @layer components {
-  /* Tekstur kertas halus untuk memberi kedalaman pada latar terang. */
+  /* Tekstur butiran halus untuk memberi kedalaman pada latar putih. */
   .paper-grain {
     position: relative;
   }
@@ -253,19 +235,21 @@
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.5;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
-  }
-
-  .dark .paper-grain::before {
-    mix-blend-mode: screen;
     opacity: 0.35;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.3'/%3E%3C/svg%3E");
   }
 
   /* Label institusi: mono, huruf kecil, tracking lebar. */
   .label-mono {
     @apply font-mono text-[0.6875rem] font-medium tracking-[0.22em] uppercase;
+  }
+
+  /* Bayangan tipis di belakang teks agar terbaca di atas foto.
+     Satu lapis halus (bukan glow berlapis) — pola lazim pada hero
+     gambar full-bleed seperti "Responsive Hero Banner" (21st.dev). */
+  .teks-bayang {
+    text-shadow: 0 1px 2px color-mix(in oklab, var(--background) 90%, transparent);
   }
 
   /* Goresan monogram yang menggambar diri saat halaman dimuat. */
@@ -297,6 +281,16 @@
     }
   }
 
+  /* Garis siluet peta yang "tergambar" saat masuk viewport. */
+  .peta-garis {
+    stroke-dasharray: var(--draw-length, 6000);
+    stroke-dashoffset: var(--draw-length, 6000);
+  }
+
+  .peta-garis.is-tergambar {
+    animation: draw 2.6s ease-out forwards;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .logomark-draw {
       stroke-dashoffset: 0;
@@ -304,6 +298,12 @@
     }
 
     .logomark-pop {
+      animation: none;
+    }
+
+    .peta-garis,
+    .peta-garis.is-tergambar {
+      stroke-dashoffset: 0;
       animation: none;
     }
   }

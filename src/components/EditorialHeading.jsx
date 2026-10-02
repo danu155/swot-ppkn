@@ -2,11 +2,10 @@ import Reveal from '@/components/Reveal'
 import { cn } from '@/lib/utils'
 
 /**
- * Judul bagian bergaya editorial.
+ * Judul bagian bergaya modern-formal.
  *
- * Berbeda dari judul "template" yang selalu di tengah, heading ini rata kiri
- * dengan nomor bab gaya mono, judul serif besar, dan deskripsi pendukung — pola
- * yang lazim pada laporan tahunan/majalah. Dipakai konsisten oleh semua section.
+ * Rata kiri dengan nomor bab (mono), pil "eyebrow", judul display besar, dan
+ * deskripsi pendukung. Dipakai konsisten oleh semua section.
  */
 export function EditorialHeading({
   bab,
@@ -26,17 +25,11 @@ export function EditorialHeading({
         className,
       )}
     >
-      <div
-        className={cn(
-          'flex items-center gap-3',
-          center && 'justify-center',
-        )}
-      >
+      <div className={cn('flex items-center gap-3', center && 'justify-center')}>
         {bab ? (
-          <span className="label-mono text-accent-ikn tabular-nums">{bab}</span>
-        ) : null}
-        {bab && eyebrow ? (
-          <span aria-hidden="true" className="bg-accent-ikn/40 h-px w-6" />
+          <span className="border-accent-ikn/25 bg-accent-ikn/[0.07] text-accent-ikn flex size-8 items-center justify-center rounded-lg border font-mono text-xs font-semibold tabular-nums">
+            {bab}
+          </span>
         ) : null}
         {eyebrow ? (
           <span className="label-mono text-muted-foreground">{eyebrow}</span>
@@ -45,7 +38,7 @@ export function EditorialHeading({
 
       <h2
         className={cn(
-          'mt-5 max-w-3xl text-3xl leading-[1.05] tracking-tight text-balance sm:text-4xl lg:text-[2.9rem]',
+          'mt-5 max-w-3xl text-3xl leading-[1.08] tracking-tight text-balance sm:text-4xl lg:text-[2.9rem]',
           center && 'mx-auto',
         )}
       >

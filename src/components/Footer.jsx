@@ -17,7 +17,7 @@ export default function Footer() {
               <Logomark animated={false} className="text-primary size-8" />
               <div className="leading-none">
                 <p className="text-sm font-semibold tracking-tight">SWOT IKN</p>
-                <p className="label-mono text-muted-foreground/70 mt-1">
+                <p className="label-mono text-muted-foreground mt-1">
                   Nusantara · Kalimantan Timur
                 </p>
               </div>
@@ -31,10 +31,10 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Kolom kanan: daftar sumber & kembali ke atas */}
+          {/* Kolom kanan: daftar sumber */}
           <div className="lg:col-span-5">
             <h2 className="label-mono text-muted-foreground">Sumber</h2>
-            <ul className="mt-4 divide-y">
+            <ul className="divide-border mt-4 divide-y">
               {sumber.map((s) => (
                 <li key={s.label}>
                   <a
@@ -55,7 +55,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Wordmark besar sebagai penutup editorial */}
+        {/* Wordmark besar sebagai penutup */}
         <div aria-hidden="true" className="mt-16 lg:mt-24">
           <span className="text-foreground/[0.06] block text-center text-[15vw] leading-[0.8] font-semibold tracking-tighter select-none sm:text-[13vw]">
             NUSANTARA

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 
 import Logomark from '@/components/Logomark'
 import ScrollProgress from '@/components/ScrollProgress'
-import ThemeToggle from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/button'
 import { meta } from '@/data'
 import { cn } from '@/lib/utils'
@@ -26,10 +25,10 @@ export default function SiteHeader() {
   return (
     <div
       className={cn(
-        'sticky top-0 z-40 border-b transition-colors duration-300',
+        'sticky top-0 z-40 border-b transition-[background-color,border-color,box-shadow] duration-300',
         scrolled
-          ? 'bg-background/80 supports-[backdrop-filter]:bg-background/65 backdrop-blur-md'
-          : 'bg-transparent',
+          ? 'bg-background/80 supports-[backdrop-filter]:bg-background/65 border-border shadow-[0_8px_30px_-24px_color-mix(in_oklab,var(--foreground)_45%,transparent)] backdrop-blur-md'
+          : 'border-transparent bg-transparent',
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3 lg:px-10">
@@ -42,7 +41,7 @@ export default function SiteHeader() {
             <span className="text-sm font-semibold tracking-tight">
               SWOT IKN
             </span>
-            <span className="label-mono text-muted-foreground/70 mt-0.5">
+            <span className="label-mono text-muted-foreground mt-0.5">
               Berkas Analisis
             </span>
           </span>
@@ -54,27 +53,20 @@ export default function SiteHeader() {
               <li key={item.href}>
                 <a
                   href={item.href}
-                  className="text-muted-foreground hover:text-foreground group hidden items-center gap-2 rounded-full px-3 py-1.5 text-sm transition-colors sm:inline-flex"
+                  aria-label={item.label}
+                  className="text-muted-foreground hover:text-foreground hover:bg-muted group inline-flex items-center gap-2 rounded-full px-2.5 py-1.5 text-sm transition-colors sm:px-3"
                 >
-                  <span className="label-mono text-muted-foreground/50 group-hover:text-accent-ikn transition-colors">
+                  <span className="label-mono text-muted-foreground group-hover:text-accent-ikn transition-colors">
                     {item.nomor}
                   </span>
-                  {item.label}
+                  <span className="hidden md:inline">{item.label}</span>
                 </a>
               </li>
             ))}
-            <li className="ml-1">
-              <Button
-                asChild
-                size="sm"
-                variant="outline"
-                className="hidden rounded-full sm:inline-flex"
-              >
+            <li className="ml-1 hidden sm:block">
+              <Button asChild size="sm" className="rounded-full">
                 <a href="#swot">{meta.tombolMulai}</a>
               </Button>
-            </li>
-            <li>
-              <ThemeToggle />
             </li>
           </ul>
         </nav>

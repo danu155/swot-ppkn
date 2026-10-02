@@ -8,7 +8,8 @@ function bacaReducedMotion() {
 }
 
 /**
- * Membungkus konten dengan animasi fade + slide-in halus saat masuk viewport.
+ * Membungkus konten dengan animasi fade + slide-in + sedikit zoom halus saat
+ * masuk viewport.
  * - Memakai IntersectionObserver (ringan, tanpa library animasi).
  * - Animasi hanya berjalan sekali.
  * - Otomatis nonaktif bila pengguna mengaktifkan "prefers-reduced-motion"
@@ -57,10 +58,10 @@ export default function Reveal({
       ref={ref}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
       className={cn(
-        'transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none',
+        'transition-[opacity,transform,filter] duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none',
         visible
-          ? 'translate-y-0 opacity-100'
-          : 'translate-y-4 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
+          ? 'translate-y-0 scale-100 opacity-100 blur-none'
+          : 'translate-y-6 scale-[0.985] opacity-0 blur-[2px] motion-reduce:translate-y-0 motion-reduce:scale-100 motion-reduce:opacity-100 motion-reduce:blur-none',
         className,
       )}
       {...props}
