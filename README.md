@@ -34,7 +34,7 @@ menyentuh kode komponen.
 | ---------------- | --------------------- | -------------------------------------- |
 | `meta`           | Hero, Footer, header  | Teks antarmuka (judul, tombol, label)  |
 | `latarBelakang`  | LatarBelakang         | 3 kartu konteks                        |
-| `swot`           | AnalisisSwot, Marquee | 4 aspek SWOT + definisi teori + 3 poin |
+| `swot`           | AnalisisSwot | 4 aspek SWOT + definisi teori + 3 poin |
 | `timeline`       | Timeline              | 4 tahap pembangunan                    |
 
 Angka sorotan pada bagian Latar Belakang (`meta.section.latarBelakang.stats`)
@@ -109,8 +109,6 @@ Lalu di **Settings → Pages**, pilih branch `gh-pages` sebagai sumber.
 │     ├─ HeroBackground.jsx   # Foto IKN full-bleed (WebP + fallback JPG)
 │     ├─ PanelLokasi.jsx      # Pelat lokasi tipografis (pengganti peta)
 │     ├─ LatarBelakang.jsx    # Bagian 2 (panel lokasi + daftar alasan editorial)
-│     ├─ AspekMarquee.jsx     # Pita bergulir nama aspek
-│     ├─ Marquee.jsx          # Komponen marquee (CSS keyframes)
 │     ├─ AnalisisSwot.jsx     # Bagian 3 (kartu + popup detail)
 │     ├─ Timeline.jsx         # Bagian 4
 │     ├─ Footer.jsx           # Bagian 5

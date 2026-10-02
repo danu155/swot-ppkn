@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 
 import Reveal from '@/components/Reveal'
+import { Rule } from '@/components/Rule'
 import { Section, SectionHeading } from '@/components/Section'
-import { AspectCard } from '@/components/ui/aspect-card'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -19,55 +19,84 @@ import { gayaUntuk } from '@/lib/swot-style'
 import { cn } from '@/lib/utils'
 
 /**
- * Cover kartu aspek: komposisi ringkas dengan huruf raksasa samar sebagai latar,
- * kisi tipis, pil kategori di kiri-atas, dan medali ikon di tengah.
+ * Satu baris ledger SWOT — pola yang sama dengan baris angka kunci hero dan
+ * Tiga Alasan Utama: tipografi + hairline, TANPA kotak dan tanpa ornamen.
+ *
+ * Anatomi baris (desktop):
+ *   [chip huruf S] [Kategori mono]   Judul Aspek besar   01 poin · 02 poin · 03 poin   ↗
+ * Di mobile: chip + kategori, judul, lalu poin tersusun ke bawah.
  */
-function CoverAspek({ item, gaya }) {
-  const { Icon, singkatan, coverBg, teks, hex, kaca } = gaya
+function BarisAspek({ item, onBuka }) {
+  const gaya = gayaUntuk(item.warna)
+  const { Icon, singkatan, teks, hex } = gaya
 
   return (
-    <div className={cn('absolute inset-0', coverBg)}>
-      {/* Kisi tipis */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 opacity-50 [background-image:linear-gradient(var(--paper-line)_1px,transparent_1px),linear-gradient(90deg,var(--paper-line)_1px,transparent_1px)] [background-size:20px_20px] [mask-image:radial-gradient(circle_at_50%_40%,black,transparent_80%)]"
-      />
+    <button
+      type="button"
+      onClick={onBuka}
+      aria-label={`Buka detail ${item.kategori} (${item.label})`}
+      className="group focus-visible:ring-ring relative w-full text-left outline-none"
+    >
+      <div className="flex flex-col gap-5 py-8 sm:py-10 lg:flex-row lg:items-center lg:gap-8">
+        {/* Identitas: chip huruf + kategori */}
+        <div className="flex items-center gap-3.5 lg:w-56 lg:shrink-0">
+          <span
+            className="flex size-10 shrink-0 items-center justify-center rounded-lg font-mono text-base font-semibold tabular-nums"
+            style={{
+              backgroundColor: `color-mix(in oklab, ${hex} 11%, transparent)`,
+              color: hex,
+              boxShadow: `inset 0 0 0 1px color-mix(in oklab, ${hex} 26%, transparent)`,
+            }}
+          >
+            {singkatan}
+          </span>
+          <div>
+            <span className={cn('label-mono block', teks)}>{item.kategori}</span>
+            <span className="text-muted-foreground mt-0.5 hidden items-center gap-1.5 text-xs sm:flex">
+              <Icon className="size-3.5" strokeWidth={1.75} aria-hidden="true" />
+              <span className="group-hover:text-foreground transition-colors duration-300">
+                Lihat tiga poin
+              </span>
+            </span>
+          </div>
+        </div>
 
-      {/* Huruf raksasa samar di kiri-bawah */}
-      <span
-        aria-hidden="true"
-        className={cn(
-          'font-display pointer-events-none absolute -bottom-10 left-1 text-[7rem] leading-none font-semibold opacity-[0.1] select-none',
-          teks,
-        )}
-      >
-        {singkatan}
-      </span>
+        {/* Judul aspek */}
+        <h3 className="text-foreground text-3xl leading-tight tracking-tight text-balance transition-colors duration-300 sm:text-4xl lg:flex-1">
+          {item.label}
+        </h3>
 
-      {/* Pil kategori */}
-      <span
-        className={cn(
-          'bg-background/70 absolute top-3.5 left-3.5 rounded-full px-2.5 py-0.5 font-mono text-[0.6rem] font-medium tracking-[0.18em] uppercase ring-1 backdrop-blur-md',
-          kaca,
-          teks,
-        )}
-      >
-        {item.kategori}
-      </span>
+        {/* Preview poin: judul saja, rata kanan di desktop. Nomor memakai
+            label-mono tapi lebar kolomnya tetap — angka jadi sejajar rapi
+            dengan judul poin, tidak jauh / melayang. */}
+        <ol className="space-y-2 lg:w-96 lg:shrink-0 lg:text-right">
+          {item.poin.map((poin, i) => (
+            <li
+              key={poin.judul}
+              className="flex items-baseline gap-3 lg:grid lg:grid-cols-[1.6rem_1fr] lg:gap-0"
+            >
+              <span
+                className={cn('label-mono shrink-0 tabular-nums', teks)}
+                aria-hidden="true"
+              >
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span className="text-muted-foreground group-hover:text-foreground text-sm leading-snug text-pretty transition-colors duration-300">
+                {poin.judul}
+              </span>
+            </li>
+          ))}
+        </ol>
 
-      {/* Medali ikon */}
-      <div className="absolute inset-0 flex items-center justify-center">
+        {/* Cakram panah — satu-satunya elemen interaksi */}
         <span
-          className="ring-background/60 flex size-14 items-center justify-center rounded-2xl ring-1 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:scale-105"
-          style={{
-            backgroundColor: `color-mix(in oklab, ${hex} 14%, transparent)`,
-            boxShadow: `inset 0 0 0 1px color-mix(in oklab, ${hex} 26%, transparent)`,
-          }}
+          aria-hidden="true"
+          className="border-border text-muted-foreground group-hover:border-transparent group-hover:text-background hidden size-11 shrink-0 items-center justify-center rounded-full border transition-all duration-300 group-hover:bg-foreground lg:flex"
         >
-          <Icon className={cn('size-7', teks)} strokeWidth={1.7} aria-hidden="true" />
+          <ArrowUpRight className="size-[18px]" strokeWidth={2} />
         </span>
       </div>
-    </div>
+    </button>
   )
 }
 
@@ -76,37 +105,37 @@ export default function AnalisisSwot() {
   const [aktif, setAktif] = useState(null)
 
   return (
-    <Section id="swot">
+    <Section id="swot" className="border-b">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <SectionHeading
-          bab="02"
-          eyebrow="Empat Aspek"
-          judul={judul}
-          deskripsi={deskripsi}
-          align="center"
-          className="mx-auto"
-        />
+        {/* Jembatan dari bab 01: rule editorial pembuka */}
+        <Rule className="mt-2" />
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {swot.map((item, i) => {
-            const gaya = gayaUntuk(item.warna)
-            return (
-              <Reveal key={item.kategori} delay={i * 90} className="h-full">
-                <AspectCard
-                  onOpen={() => setAktif(item)}
-                  title={item.label}
-                  meta={item.kategori}
-                  accent={gaya.hex}
-                  accentForeground="#ffffff"
-                  cover={<CoverAspek item={item} gaya={gaya} />}
-                />
-              </Reveal>
-            )
-          })}
+        {/* Kepala bagian: judul kiri, lead kanan — senada dengan bab 01 */}
+        <div className="mt-12 grid items-end gap-8 sm:mt-14 lg:grid-cols-12">
+          <SectionHeading
+            bab="02"
+            eyebrow="Empat Aspek"
+            judul={judul}
+            className="lg:col-span-7"
+          />
+          <Reveal className="lg:col-span-5" delay={120}>
+            <p className="text-muted-foreground text-lg leading-relaxed text-pretty">
+              {deskripsi}
+            </p>
+          </Reveal>
+        </div>
+
+        {/* Empat baris ledger, dipisah hairline — tanpa kotak */}
+        <div className="divide-border mt-10 divide-y sm:mt-12">
+          {swot.map((item, i) => (
+            <Reveal key={item.kategori} delay={i * 70}>
+              <BarisAspek item={item} onBuka={() => setAktif(item)} />
+            </Reveal>
+          ))}
         </div>
       </div>
 
-      {/* Satu dialog bersama; isinya mengikuti kartu yang dibuka */}
+      {/* Satu dialog bersama; isinya mengikuti baris yang dibuka */}
       <Dialog open={Boolean(aktif)} onOpenChange={(o) => !o && setAktif(null)}>
         {aktif ? (
           <DialogContent className="flex max-h-[92vh] min-h-[38rem] flex-col gap-0 overflow-hidden p-0 sm:max-w-[min(72rem,calc(100%-2rem))]">
@@ -119,9 +148,8 @@ export default function AnalisisSwot() {
 }
 
 /**
- * Isi popup satu aspek. Di layar lebar dipakai dua kolom: panel identitas
- * berwarna di kiri (ikon, kategori, judul, definisi teori) dan daftar tiga poin
- * di kanan yang bisa digulir. Di layar sempit, tumpukan satu kolom.
+ * Isi popup satu aspek — bahasa editorial yang sama: hairline, nomor mono,
+ * tanpa panel warna blok. Konten tetap utuh dari data.js.
  */
 function AspectDetail({ item }) {
   const gaya = gayaUntuk(item.warna)
@@ -130,31 +158,15 @@ function AspectDetail({ item }) {
   return (
     <>
       <div className="grid min-h-0 flex-1 grid-cols-1 sm:grid-cols-[minmax(0,24rem)_minmax(0,1fr)]">
-        {/* Panel identitas berwarna */}
-        <div
-          className={cn(
-            'relative flex flex-col justify-between gap-6 overflow-hidden border-b p-7 sm:border-r sm:border-b-0',
-            gaya.latarIkon,
-          )}
-        >
-          <span
-            aria-hidden="true"
-            className={cn(
-              'font-display pointer-events-none absolute -bottom-14 -left-3 text-[11rem] leading-none font-semibold opacity-[0.12] select-none',
-              teks,
-            )}
-          >
-            {gaya.singkatan}
-          </span>
-
+        {/* Panel identitas */}
+        <div className="relative flex flex-col justify-between gap-6 overflow-hidden border-b p-7 sm:border-r sm:border-b-0">
           <DialogHeader className="relative gap-5">
             <span
-              className={cn(
-                'bg-background/70 flex size-14 items-center justify-center rounded-2xl ring-1',
-                teks,
-              )}
+              className="flex size-14 items-center justify-center rounded-xl"
               style={{
-                '--tw-ring-color': `color-mix(in oklab, ${hex} 30%, transparent)`,
+                backgroundColor: `color-mix(in oklab, ${hex} 11%, transparent)`,
+                color: hex,
+                boxShadow: `inset 0 0 0 1px color-mix(in oklab, ${hex} 26%, transparent)`,
               }}
             >
               <Icon className="size-7" strokeWidth={1.7} aria-hidden="true" />
@@ -167,12 +179,7 @@ function AspectDetail({ item }) {
             </div>
           </DialogHeader>
 
-          <DialogDescription
-            className={cn(
-              'relative text-base leading-relaxed text-pretty italic sm:text-[1.05rem]',
-              teks,
-            )}
-          >
+          <DialogDescription className="text-muted-foreground relative text-base leading-relaxed text-pretty italic sm:text-[1.05rem]">
             {item.teori}
           </DialogDescription>
         </div>
@@ -180,17 +187,10 @@ function AspectDetail({ item }) {
         {/* Daftar poin */}
         <div className="min-h-0 overflow-y-auto p-7">
           <p className="label-mono text-muted-foreground mb-6">Tiga Poin Kunci</p>
-          <ol className="space-y-7">
+          <ol className="divide-border divide-y">
             {item.poin.map((poin, i) => (
-              <li key={poin.judul} className="flex gap-4">
-                <span
-                  className={cn(
-                    'flex size-9 shrink-0 items-center justify-center rounded-lg font-mono text-sm font-medium tabular-nums',
-                    gaya.latarIkon,
-                    teks,
-                  )}
-                  aria-hidden="true"
-                >
+              <li key={poin.judul} className="flex gap-5 py-6 first:pt-0 last:pb-0">
+                <span className={cn('label-mono shrink-0 pt-1 tabular-nums', teks)} aria-hidden="true">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div className="space-y-2">
@@ -209,7 +209,7 @@ function AspectDetail({ item }) {
 
       {/* Kaki */}
       <div className="flex items-center justify-between gap-3 border-t px-7 py-4">
-        <span className="text-muted-foreground hidden font-mono text-xs tracking-wide sm:inline">
+        <span className="label-mono text-muted-foreground hidden sm:inline">
           {item.poin.length} poin · {item.kategori}
         </span>
         <DialogClose asChild>

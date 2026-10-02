@@ -1,5 +1,4 @@
 import AnalisisSwot from '@/components/AnalisisSwot'
-import AspekMarquee from '@/components/AspekMarquee'
 import Footer from '@/components/Footer'
 import Hero from '@/components/Hero'
 import LatarBelakang from '@/components/LatarBelakang'
@@ -13,7 +12,6 @@ export default function App() {
       <Hero />
       <main>
         <LatarBelakang />
-        <AspekMarquee />
         <AnalisisSwot />
         <Timeline />
       </main>
