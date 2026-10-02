@@ -36,6 +36,7 @@ export default function Hero() {
       id="beranda"
       className="relative isolate flex min-h-[88svh] flex-col overflow-hidden lg:min-h-[92svh]"
     >
+
       {/* Latar full-bleed (foto IKN — panorama 16:9) */}
       <div className="absolute inset-0 -z-10">
         <HeroBackground />
@@ -91,10 +92,29 @@ export default function Hero() {
 
             <h1 className="mt-6 text-4xl font-semibold leading-[1.05] tracking-tight text-balance text-white sm:text-5xl lg:text-[3.9rem]">
               Analisis SWOT Ibu Kota{' '}
-              {/* Gradasi hijau muda → kuning emas — keduanya versi terang agar
-                  tetap kontras ≥ 4,5:1 di atas lapisan gelap. */}
-              <span className="bg-gradient-to-r from-[oklch(0.87_0.13_150)] to-[oklch(0.86_0.14_90)] bg-clip-text text-transparent">
-                Nusantara
+              {/* "Nusantara" berkilau seperti kaca: gradasi dasar mint→emas,
+                  lalu sapuan highlight miring yang berjalan kiri→kanan secara
+                  periodik (animate-shimmer, 6 dtk; aman reduced-motion —
+                  keyframes dimatikan oleh design system). Clip ke bentuk huruf
+                  via background-clip:text; pita highlight transparan sehingga
+                  teks tidak pernah hilang, hanya berganti kilau. */}
+              <span className="relative inline-block">
+                {/* Lapisan 1: warna dasar (tetap terlihat tanpa animasi) */}
+                <span
+                  aria-hidden="true"
+                  className="bg-gradient-to-r from-[oklch(0.87_0.13_150)] to-[oklch(0.86_0.14_90)] bg-clip-text text-transparent"
+                >
+                  Nusantara
+                </span>
+                {/* Lapisan 2: kilau kaca — sapuan highlight lewat huruf */}
+                <span
+                  aria-hidden="true"
+                  className="animate-shimmer bg-[linear-gradient(110deg,transparent_35%,rgba(255,255,255,0.55)_50%,transparent_65%)] bg-[length:250%_100%] bg-clip-text text-transparent absolute inset-0"
+                >
+                  Nusantara
+                </span>
+                {/* Teks asli untuk screen reader & seleksi */}
+                <span className="sr-only">Nusantara</span>
               </span>
             </h1>
 

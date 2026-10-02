@@ -107,7 +107,7 @@
   --animate-spin-slow: spin 34s linear infinite;
   --animate-spin-reverse: spin-reverse 26s linear infinite;
   --animate-pulse-ring: pulse-ring 3.4s ease-out infinite;
-  --animate-shimmer: shimmer 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 3.2s linear infinite;
 
   @keyframes float {
     0%,
@@ -150,13 +150,15 @@
     }
   }
 
+  /* Kilau kaca: pita highlight menyapu TERUS dari kiri ke kanan — tanpa
+     jeda, kecepatan konstan (linear). Ujung siklus ditaruh di luar area
+     teks (pita sudah keluar bidang), sehingga loop terasa seamless. */
   @keyframes shimmer {
-    0%,
-    100% {
-      background-position: 0% 50%;
+    0% {
+      background-position: 150% 50%;
     }
-    50% {
-      background-position: 100% 50%;
+    100% {
+      background-position: -50% 50%;
     }
   }
 }@layer base {
