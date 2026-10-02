@@ -79,8 +79,10 @@ export default function Hero() {
           <p className="label-mono text-foreground/75">Berkas Analisis · 2022–2045</p>
         </div>
 
-        {/* Teks utama — di dalam zona scrim gelap, jadi teks PUTIH */}
-        <div className="flex flex-1 items-center py-16 lg:py-24">
+        {/* Teks utama — di dalam zona scrim gelap, jadi teks PUTIH.
+            Naik sedikit (items-start + pt) agar blok teks lebih tinggi
+            posisinya, tanpa mengubah layout apa pun di bawahnya. */}
+        <div className="flex flex-1 items-start pt-10 pb-16 sm:pt-12 lg:pt-16 lg:pb-24">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-3 py-1 text-white backdrop-blur-[2px]">
               <span className="size-1.5 rounded-full bg-white" />
