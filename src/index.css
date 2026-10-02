@@ -170,9 +170,7 @@
       background-position: 100% 50%;
     }
   }
-}
-
-@layer base {
+}@layer base {
   * {
     @apply border-border outline-ring/50;
   }
@@ -214,7 +212,6 @@
     .animate-spin-slow,
     .animate-spin-reverse,
     .animate-pulse-ring,
-    .animate-draw,
     .animate-shimmer,
     .logomark-draw,
     .logomark-pop {
@@ -245,13 +242,6 @@
     @apply font-mono text-[0.6875rem] font-medium tracking-[0.22em] uppercase;
   }
 
-  /* Bayangan tipis di belakang teks agar terbaca di atas foto.
-     Satu lapis halus (bukan glow berlapis) — pola lazim pada hero
-     gambar full-bleed seperti "Responsive Hero Banner" (21st.dev). */
-  .teks-bayang {
-    text-shadow: 0 1px 2px color-mix(in oklab, var(--background) 90%, transparent);
-  }
-
   /* Goresan monogram yang menggambar diri saat halaman dimuat. */
   .logomark-draw {
     stroke-dasharray: 1;
@@ -278,33 +268,6 @@
     to {
       transform: scale(1);
       opacity: 1;
-    }
-  }
-
-  /* Garis siluet peta yang "tergambar" saat masuk viewport. */
-  .peta-garis {
-    stroke-dasharray: var(--draw-length, 6000);
-    stroke-dashoffset: var(--draw-length, 6000);
-  }
-
-  .peta-garis.is-tergambar {
-    animation: draw 2.6s ease-out forwards;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .logomark-draw {
-      stroke-dashoffset: 0;
-      animation: none;
-    }
-
-    .logomark-pop {
-      animation: none;
-    }
-
-    .peta-garis,
-    .peta-garis.is-tergambar {
-      stroke-dashoffset: 0;
-      animation: none;
     }
   }
 }

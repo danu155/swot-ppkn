@@ -1,100 +1,99 @@
-import { Building2, Compass, Scale, Trees } from 'lucide-react'
+import { Building2, Scale, Trees } from 'lucide-react'
 
-import PetaIndonesia from '@/components/PetaIndonesia'
+import PanelLokasi from '@/components/PanelLokasi'
 import Reveal from '@/components/Reveal'
-import StatChips from '@/components/StatChips'
+import { Rule } from '@/components/Rule'
 import { Section, SectionHeading } from '@/components/Section'
 import { latarBelakang, meta } from '@/data'
+import { cn } from '@/lib/utils'
 
 // Ikon murni presentasional, dipetakan per urutan (bukan konten/fakta).
 const ikon = [Building2, Scale, Trees]
 
 /**
- * Satu alasan sebagai kartu: lencana ikon lembut, judul, lalu deskripsi.
- * Permukaan putih dengan garis tepi tipis dan bayangan halus saat hover.
+ * Satu alasan sebagai ITEM editorial (tanpa kotak/kartu):
+ * nomor mono + ikon penanda di atas, lalu judul + deskripsi di bawah.
+ * Di mobile item tersusun ke bawah; di desktop (lg) ketiganya berdampingan
+ * kiri–tengah–kanan dan dipisah hairline vertikal oleh `lg:divide-x`.
+ *
+ * Catatan padding: `first:`/`last:` TIDAK dipakai di sini karena tiap item
+ * dibungkus Reveal — di mata Tailwind semuanya anak tunggal, sehingga
+ * first/last kena semuanya. Padding tepi diatur lewat `index` dari induk.
  */
-function KartuAlasan({ item, index }) {
+function ItemAlasan({ item, index, total }) {
   const Icon = ikon[index] ?? Building2
+  const nomor = String(index + 1).padStart(2, '0')
 
   return (
-    <article className="group bg-card relative flex h-full flex-col rounded-2xl border p-6 shadow-[0_1px_2px_color-mix(in_oklab,var(--foreground)_8%,transparent)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_30px_60px_-34px_color-mix(in_oklab,var(--foreground)_30%,transparent)] sm:p-7">
-      <span className="bg-accent-ikn/10 text-accent-ikn flex size-11 items-center justify-center rounded-xl transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-105">
-        <Icon className="size-5" strokeWidth={1.75} aria-hidden="true" />
-      </span>
+    <article
+      className={cn(
+        'group flex flex-col gap-4 py-8 sm:py-10 lg:gap-5 lg:px-8 lg:pt-10 lg:pb-6',
+        index === 0 && 'lg:pl-0',
+        index === total - 1 && 'lg:pr-0',
+      )}
+    >
+      {/* Nomor urut + ikon penanda */}
+      <div className="flex items-center gap-3">
+        <span className="label-mono text-accent-ikn tabular-nums">{nomor}</span>
+        <span className="text-muted-foreground/60 transition-colors duration-300 group-hover:text-accent-ikn">
+          <Icon className="size-5" strokeWidth={1.75} aria-hidden="true" />
+        </span>
+      </div>
 
-      <h3 className="mt-5 text-lg leading-snug tracking-tight text-balance sm:text-xl">
-        {item.judul}
-      </h3>
-      <p className="text-muted-foreground mt-3 text-sm leading-relaxed text-pretty">
-        {item.deskripsi}
-      </p>
+      <div>
+        <h3 className="text-lg leading-snug tracking-tight text-balance sm:text-xl">
+          {item.judul}
+        </h3>
+        <p className="text-muted-foreground mt-4 max-w-md text-sm leading-relaxed text-pretty sm:text-base">
+          {item.deskripsi}
+        </p>
+      </div>
     </article>
   )
 }
 
 export default function LatarBelakang() {
-  const { judul, deskripsi, stats } = meta.section.latarBelakang
-
   return (
     <Section id="latar-belakang" className="border-b">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        {/* Jembatan dari hero: hairline editorial pembuka bab */}
+        <Rule className="mt-2" />
+
         {/* Kepala bagian: judul di kiri, lead di kanan */}
-        <div className="grid items-end gap-8 lg:grid-cols-12">
+        <div className="mt-12 grid items-end gap-8 sm:mt-14 lg:grid-cols-12">
           <SectionHeading
             bab="01"
             eyebrow="Konteks"
-            judul={judul}
+            judul={meta.section.latarBelakang.judul}
             className="lg:col-span-7"
           />
           <Reveal className="lg:col-span-5" delay={120}>
             <p className="text-muted-foreground text-lg leading-relaxed text-pretty">
-              {deskripsi}
+              {meta.section.latarBelakang.deskripsi}
             </p>
           </Reveal>
         </div>
 
-        {/* Pita angka kunci */}
-        <StatChips items={stats} className="mt-14 sm:mt-16" />
+        {/* Panel lokasi tipografis: menegaskan letak ibu kota baru */}
+        <PanelLokasi className="mt-14 sm:mt-16" />
 
-        {/* Panel peta: menegaskan letak ibu kota baru */}
-        <Reveal className="mt-14" delay={80}>
-          <div className="relative overflow-hidden rounded-3xl border bg-gradient-to-b from-muted/40 to-background">
-            <div className="grid items-center gap-8 p-7 sm:p-10 lg:grid-cols-12">
-              <div className="lg:col-span-4">
-                <span className="bg-accent-ikn/10 text-accent-ikn flex size-11 items-center justify-center rounded-xl">
-                  <Compass className="size-5" strokeWidth={1.75} aria-hidden="true" />
-                </span>
-                <h3 className="mt-5 text-2xl leading-tight tracking-tight text-balance">
-                  Dari Jakarta ke jantung Kalimantan
-                </h3>
-                <p className="text-muted-foreground mt-4 text-sm leading-relaxed text-pretty">
-                  Ibu Kota Nusantara berdiri di Kalimantan Timur, menggantikan
-                  Jakarta yang selama ini menanggung beban sebagai pusat
-                  pemerintahan sekaligus pusat ekonomi nasional.
-                </p>
-                <div className="text-muted-foreground mt-6 flex items-center gap-2">
-                  <span className="bg-accent-ikn size-2 rounded-full" />
-                  <span className="label-mono">Penanda lokasi IKN</span>
-                </div>
-              </div>
-
-              <div className="lg:col-span-8">
-                <PetaIndonesia className="mx-auto max-w-3xl" />
-              </div>
-            </div>
+        {/* Tiga alasan utama — 3 kolom di desktop (kiri-tengah-kanan),
+            tersusun ke bawah di mobile; pemisah hairline mengikuti arah grid */}
+        <div className="mt-16 lg:mt-20">
+          <div className="flex items-center gap-4">
+            <span className="label-mono text-muted-foreground shrink-0">
+              Tiga Alasan Utama
+            </span>
+            <span aria-hidden="true" className="bg-border h-px flex-1" />
           </div>
-        </Reveal>
 
-        {/* Tiga alasan utama */}
-        <p className="label-mono text-muted-foreground mt-16 lg:mt-20">
-          Tiga Alasan Utama
-        </p>
-        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {latarBelakang.map((item, i) => (
-            <Reveal key={item.judul} delay={i * 90} className="h-full">
-              <KartuAlasan item={item} index={i} />
-            </Reveal>
-          ))}
+          <div className="divide-border mt-6 grid divide-y lg:mt-8 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
+            {latarBelakang.map((item, i) => (
+              <Reveal key={item.judul} delay={i * 90}>
+                <ItemAlasan item={item} index={i} total={latarBelakang.length} />
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </Section>

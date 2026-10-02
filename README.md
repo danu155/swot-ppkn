@@ -101,16 +101,14 @@ Lalu di **Settings → Pages**, pilih branch `gh-pages` sebagai sumber.
 │  ├─ index.css               # Tailwind + token warna + keyframes animasi
 │  ├─ lib/
 │  │  ├─ utils.js             # Helper cn()
-│  │  ├─ swot-style.js        # Peta warna & ikon tiap aspek
-│  │  └─ peta-indonesia.js    # Geometri SVG peta (GeoJSON disederhanakan)
+│  │  └─ swot-style.js        # Peta warna & ikon tiap aspek
 │  └─ components/
 │     ├─ SiteHeader.jsx       # Header sticky + navigasi + progres baca
 │     ├─ ScrollProgress.jsx   # Garis progres baca di header
 │     ├─ Hero.jsx             # Bagian 1 (latar foto + judul + angka kunci)
 │     ├─ HeroBackground.jsx   # Foto IKN full-bleed (WebP + fallback JPG)
-│     ├─ PetaIndonesia.jsx    # Peta SVG beranimasi + penanda IKN
-│     ├─ LatarBelakang.jsx    # Bagian 2 (panel peta + stat chips)
-│     ├─ StatChips.jsx        # Chip angka dengan count-up
+│     ├─ PanelLokasi.jsx      # Pelat lokasi tipografis (pengganti peta)
+│     ├─ LatarBelakang.jsx    # Bagian 2 (panel lokasi + daftar alasan editorial)
 │     ├─ AspekMarquee.jsx     # Pita bergulir nama aspek
 │     ├─ Marquee.jsx          # Komponen marquee (CSS keyframes)
 │     ├─ AnalisisSwot.jsx     # Bagian 3 (kartu + popup detail)

@@ -36,19 +36,20 @@ export default function Hero() {
       id="beranda"
       className="relative isolate flex min-h-[88svh] flex-col overflow-hidden lg:min-h-[92svh]"
     >
-      {/* Latar full-bleed (foto IKN) */}
+      {/* Latar full-bleed (foto IKN — panorama 16:9) */}
       <div className="absolute inset-0 -z-10">
         <HeroBackground />
 
-        {/* Scrim vertikal — desktop: atas jernih → bawah gelap */}
-        <div className="from-foreground/80 via-foreground/45 to-transparent absolute inset-0 hidden bg-gradient-to-t lg:block" />
+        {/* Scrim vertikal — desktop: atas jernih → bawah gelap. Foto baru
+            punya zona hutan gelap di bawah, jadi scrim bisa lebih tipis. */}
+        <div className="from-foreground/70 via-foreground/35 to-transparent absolute inset-0 hidden bg-gradient-to-t lg:block" />
         {/* Scrim vertikal — mobile: lebih tebal karena teks memanjang ke atas */}
-        <div className="from-foreground/85 via-foreground/60 to-foreground/35 absolute inset-0 bg-gradient-to-t lg:hidden" />
+        <div className="from-foreground/80 via-foreground/55 to-foreground/30 absolute inset-0 bg-gradient-to-t lg:hidden" />
 
         {/* Scrim diagonal kiri — desktop saja; solid di zona teks lalu memudar
             sebelum menyentuh baris meta di atas */}
         <div
-          className="from-foreground/75 to-transparent absolute inset-0 hidden bg-gradient-to-r lg:block"
+          className="from-foreground/65 to-transparent absolute inset-0 hidden bg-gradient-to-r lg:block"
           style={{
             maskImage:
               'linear-gradient(to top, black 0%, black 55%, transparent 85%)',
