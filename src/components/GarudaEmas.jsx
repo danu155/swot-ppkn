@@ -50,38 +50,50 @@ export default function GarudaEmas({ className }) {
           transition: 'transform 250ms ease-out',
         }}
       >
-        {/* Cincin orbit putus-putus + dua titik pulau */}
-        <div
-          aria-hidden="true"
-          className="animate-spin-slow absolute -inset-[6%]"
-        >
-          <div className="absolute inset-0 rounded-full border border-dashed border-[color-mix(in_oklab,var(--accent-ikn)_32%,transparent)]" />
-          <span className="bg-accent-ikn absolute top-[1.5%] left-1/2 size-2 -translate-x-1/2 rounded-full" />
-          <span className="bg-accent-ikn/55 absolute bottom-[10%] right-[6%] size-1.5 rounded-full" />
-        </div>
+        {/* PANGGUNG MELAYANG: halo + garuda dalam SATU wrapper float —
+            semuanya naik-turun bareng. */}
+        <div className="animate-float absolute inset-0">
+          {/* Halo: cahaya radial lembut di belakang garuda. Tanpa tepi keras
+              → mustahil "menabrak" bentuk garuda; denyut halus sinkron 14 dtk
+              memberi rasa hidup tanpa ornamen tech-cincin yang janggal di
+              lambang negara. */}
+          <div
+            aria-hidden="true"
+            className="animate-halo-napas absolute -inset-[18%] rounded-full blur-2xl"
+            style={{
+              background:
+                'radial-gradient(circle, oklch(0.82 0.13 88 / 0.32) 0%, oklch(0.72 0.12 80 / 0.12) 42%, transparent 68%)',
+            }}
+          />
 
-        {/* Garuda emas — bentuk dari mask, warna dari gradien */}
-        <div
-          className="animate-float absolute inset-0"
-          style={{
-            WebkitMaskImage: 'url(/garuda-mask.webp)',
-            maskImage: 'url(/garuda-mask.webp)',
-            WebkitMaskSize: 'contain',
-            maskSize: 'contain',
-            WebkitMaskRepeat: 'no-repeat',
-            maskRepeat: 'no-repeat',
-            WebkitMaskPosition: 'center',
-            maskPosition: 'center',
-          }}
-        >
-          <div className="h-full w-full bg-[linear-gradient(160deg,oklch(0.82_0.13_88)_0%,oklch(0.68_0.12_76)_45%,oklch(0.52_0.1_70)_100%)]" />
+          {/* Garuda emas — bentuk dari mask, warna dari gradien + kilau
+              logam yang menyapu permukaannya. */}
+          <div
+            className="absolute inset-0"
+            style={{
+              WebkitMaskImage: 'url(/garuda-mask.webp)',
+              maskImage: 'url(/garuda-mask.webp)',
+              WebkitMaskSize: 'contain',
+              maskSize: 'contain',
+              WebkitMaskRepeat: 'no-repeat',
+              maskRepeat: 'no-repeat',
+              WebkitMaskPosition: 'center',
+              maskPosition: 'center',
+            }}
+          >
+            {/* Warna dasar emas */}
+            <div className="absolute inset-0 bg-[linear-gradient(160deg,oklch(0.82_0.13_88)_0%,oklch(0.68_0.12_76)_45%,oklch(0.52_0.1_70)_100%)]" />
+            {/* Kilau logam: pita highlight diagonal lewat permukaan emas */}
+            <div className="animate-kilau-emas absolute inset-0 bg-[linear-gradient(115deg,transparent_30%,rgba(255,244,214,0.75)_47%,rgba(255,255,255,0.9)_50%,rgba(255,244,214,0.75)_53%,transparent_70%)] bg-[length:220%_100%]" />
+          </div>
         </div>
       </div>
 
-      {/* Bayangan lembut di bawah — memberi bobot tanpa kotak */}
+      {/* Bayangan yang "bernapas" — menyempit & memudar saat garuda di
+          puncak float, melebar & pekat saat rendah (sinkron 14 dtk). */}
       <div
         aria-hidden="true"
-        className="bg-foreground/15 mx-auto mt-1 h-3 w-2/5 rounded-full blur-md"
+        className="animate-bayang-napas bg-foreground mx-auto mt-1 h-3 w-2/5 rounded-full blur-md"
       />
     </div>
   )

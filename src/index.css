@@ -108,6 +108,16 @@
   --animate-spin-reverse: spin-reverse 26s linear infinite;
   --animate-pulse-ring: pulse-ring 3.4s ease-out infinite;
   --animate-shimmer: shimmer 3.2s linear infinite;
+  /* Kilau logam emas: sapuan highlight lewat permukaan (garuda).
+     Sama keluarga dengan shimmer teks, tapi durasi lebih panjang &
+     sudut berbeda agar tidak terasa sinkron-kaku. */
+  --animate-kilau-emas: kilau-emas 7.5s linear infinite;
+  /* Bayangan yang "bernapas": mengikuti ritme float (14s) — memudar &
+     menyempit saat garuda di titik tertinggi, pekat & lebar saat rendah. */
+  --animate-bayang-napas: bayang-napas 14s ease-in-out infinite;
+  /* Halo di belakang garuda: berdenyut halus sinkron float — lebih terang
+     & sedikit membesar saat garuda naik. */
+  --animate-halo-napas: halo-napas 14s ease-in-out infinite;
 
   @keyframes float {
     0%,
@@ -159,6 +169,43 @@
     }
     100% {
       background-position: -50% 50%;
+    }
+  }
+
+  /* Kilau logam: pita highlight diagonal lewat permukaan emas. */
+  @keyframes kilau-emas {
+    0% {
+      background-position: -150% 0%;
+    }
+    100% {
+      background-position: 250% 0%;
+    }
+  }
+
+  /* Bayangan bernapas: sinkron dengan float (0% = rendah, 50% = puncak). */
+  @keyframes bayang-napas {
+    0%,
+    100% {
+      transform: scaleX(1) translateY(0);
+      opacity: 0.18;
+    }
+    50% {
+      transform: scaleX(0.72) translateY(-2px);
+      opacity: 0.1;
+    }
+  }
+
+  /* Halo bernapas: kebalikan bayangan — makin terang & lega saat garuda
+     naik (50%), redup saat turun. */
+  @keyframes halo-napas {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: scale(0.94);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.06);
     }
   }
 }@layer base {

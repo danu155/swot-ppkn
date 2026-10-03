@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react'
+
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
 
 import HeroBackground from '@/components/HeroBackground'
@@ -7,6 +9,86 @@ import { meta } from '@/data'
 
 // Sumber angka kunci tetap dari data.js (tidak ada fakta yang di-hardcode).
 const sorotan = meta.section.latarBelakang.stats
+
+/**
+ * Angka count-up — dari 0 menuju nilai tujuan saat elemen pertama kali
+ * terlihat. Format persen (> 57%) dan tahun (2045) tetap ditampilkan
+ * utuh: angka murni yang dianimasikan, prefiks/sufiks menyertai sejak
+ * frame awal. Tanpa dependensi; rAF + easing cubic-out. Saat
+ * prefers-reduced-motion, nilai langsung ditampilkan tanpa animasi.
+ */
+function AngkaNaik({ teks, className }) {
+  const ref = useRef(null)
+  const [tampil, setTampil] = useState(teks)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return undefined
+
+    // Reduced motion atau tanpa IntersectionObserver: state awal sudah
+    // teks akhir — tidak ada yang perlu di-set di sini.
+    if (
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      typeof IntersectionObserver === 'undefined'
+    ) {
+      return undefined
+    }
+
+    // Pisahkan bagian numerik dari teks (mis. "> 57%" → numerik "57").
+    const m = teks.match(/\d+(?:[.,]\d+)?/)
+    if (!m) return undefined
+    const numerikStr = m[0].replace(',', '.')
+    const tujuan = Number(numerikStr)
+    if (!Number.isFinite(tujuan)) return undefined
+    const desimal = (numerikStr.split('.')[1] ?? '').length
+    const terpilih = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    const durasi = 1600
+    let raf = 0
+    let mulai = 0
+
+    const format = (v) => {
+      const angka = v.toFixed(desimal).replace('.', ',')
+      return teks.replace(numerikStr.replace('.', ','), angka)
+    }
+
+    const tick = (ts) => {
+      if (!mulai) mulai = ts
+      const p = Math.min(1, (ts - mulai) / durasi)
+      const eased = 1 - (1 - p) ** 3 // cubic-out
+      setTampil(format(tujuan * eased))
+      if (p < 1) raf = requestAnimationFrame(tick)
+      else setTampil(teks) // frame terakhir: nilai asli persis
+    }
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          obs.disconnect()
+          if (terpilih) {
+            setTampil(teks)
+            return
+          }
+          setTampil(format(0))
+          raf = requestAnimationFrame(tick)
+        }
+      },
+      { threshold: 0.4 },
+    )
+    obs.observe(el)
+
+    return () => {
+      obs.disconnect()
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [teks])
+
+  return (
+    <span ref={ref} className={className}>
+      {tampil}
+    </span>
+  )
+}
 
 /**
  * Hero gambar FULL-BLEED — foto IKN tampil penuh dari tepi ke tepi,
@@ -148,12 +230,12 @@ export default function Hero() {
               </Button>
             </div>
 
-            {/* Baris angka kunci */}
+            {/* Baris angka kunci — angkanya count-up dari 0 saat terlihat */}
             <dl className="mt-10 grid max-w-xl grid-cols-3 divide-x divide-white/25 border-t border-white/30 pt-6">
               {sorotan.map((s) => (
                 <div key={s.label} className="px-4 first:pl-0">
                   <dt className="text-2xl font-semibold tracking-tight text-white tabular-nums sm:text-3xl">
-                    {s.nilai}
+                    <AngkaNaik teks={s.nilai} />
                   </dt>
                   <dd className="mt-1 text-xs leading-snug text-white/85 text-pretty">
                     {s.label}
