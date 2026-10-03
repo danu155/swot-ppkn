@@ -133,3 +133,4 @@ Lalu di **Settings → Pages**, pilih branch `gh-pages` sebagai sumber.
   bundel ringan dan tajam di semua layar.
 # swot-ppkn
 # swot-ppkn
+# pkn-SWOT-project
