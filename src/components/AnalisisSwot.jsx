@@ -95,6 +95,17 @@ function BarisAspek({ item, onBuka }) {
         >
           <ArrowUpRight className="size-[18px]" strokeWidth={2} />
         </span>
+
+        {/* Petunjuk ketuk — mobile saja. Barisnya memang sudah bisa diketuk
+            seluruhnya, tapi tanpa affordance visual terlihat seperti teks
+            statis; pill ini membuat target ketuk terlihat jelas. */}
+        <span
+          aria-hidden="true"
+          className="border-border text-muted-foreground group-hover:border-foreground/40 group-hover:text-foreground -mt-1 inline-flex w-fit items-center gap-2 rounded-full border px-4 py-2 text-xs font-medium transition-colors duration-300 sm:hidden"
+        >
+          Buka detail
+          <ArrowUpRight className="size-3.5" strokeWidth={2} />
+        </span>
       </div>
     </button>
   )
