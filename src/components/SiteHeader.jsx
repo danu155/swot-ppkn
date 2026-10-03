@@ -10,6 +10,7 @@ const navItems = [
   { href: '#latar-belakang', label: 'Latar Belakang', nomor: '01' },
   { href: '#swot', label: 'SWOT', nomor: '02' },
   { href: '#timeline', label: 'Timeline', nomor: '03' },
+  { href: '#diskusi', label: 'Diskusi', nomor: '04' },
 ]
 
 export default function SiteHeader() {

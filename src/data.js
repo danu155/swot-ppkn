@@ -43,6 +43,12 @@ export const meta = {
       judul: 'Timeline Pembangunan',
       deskripsi: 'Empat tahap besar pembangunan Ibu Kota Nusantara hingga 2045.',
     },
+    diskusi: {
+      judul: 'Aspirasi & Diskusi',
+      deskripsi:
+        'Sampaikan pandangan kritis, pertanyaan, atau masukan untuk sesi diskusi presentasi.',
+      kategoriOpsi: ['Pertanyaan', 'Pandangan', 'Saran'],
+    },
   },
   footer: {
     judulSumber: 'Sumber & Referensi',

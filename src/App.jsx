@@ -1,4 +1,5 @@
 import AnalisisSwot from '@/components/AnalisisSwot'
+import DiskusiKomentar from '@/components/DiskusiKomentar'
 import Footer from '@/components/Footer'
 import Hero from '@/components/Hero'
 import LatarBelakang from '@/components/LatarBelakang'
@@ -14,6 +15,7 @@ export default function App() {
         <LatarBelakang />
         <AnalisisSwot />
         <Timeline />
+        <DiskusiKomentar />
       </main>
       <Footer />
     </>
