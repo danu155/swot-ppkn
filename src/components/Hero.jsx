@@ -146,8 +146,12 @@ export default function Hero() {
       </div>
 
       <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 lg:px-10">
-        {/* Baris meta atas — teks GELAP karena berdiri di atas langit terang */}
-        <div className="flex flex-wrap items-center justify-between gap-3 py-4">
+        {/* Baris meta atas — teks GELAP karena berdiri di atas langit terang.
+            Rata KIRI di mobile: justify-between hanya aktif ≥ lg, karena
+            saat flex-wrap di layar sempit, justify-between akan mendorong
+            baris kedua ("Berkas Analisis") ke tepi kanan dan kedua baris
+            terlihat tidak sejajar. */}
+        <div className="flex flex-wrap items-center justify-start gap-x-5 gap-y-1 py-4 lg:justify-between">
           <div className="flex items-center gap-3">
             <Logomark animated={false} className="text-foreground size-8" />
             <div className="leading-tight">
